@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Internal Audit Follow-Up & Ratification System</title>
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-light: #2563eb;
+      --primary-bg: #eff6ff;
+      --slate-900: #0f172a;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-400: #94a3b8;
+      --slate-200: #e2e8f0;
+      --slate-100: #f1f5f9;
+      --slate-50: #f8fafc;
+      --success: #15803d;
+      --success-bg: #dcfce7;
+      --warning: #b45309;
+      --warning-bg: #fef3c7;
+      --danger: #b91c1c;
+      --danger-bg: #fee2e2;
+      --info: #0369a1;
+      --info-bg: #e0f2fe;
+      --radius: 8px;
+      --shadow: 0 2px 8px rgba(15, 23, 42, 0.07);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--slate-100);
+      color: var(--slate-900);
+      line-height: 1.5;
+    }
+
+    /* Header & Navigation */
+    header {
+      background: var(--primary);
+      color: #fff;
+      padding: 14px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    header h1 { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.2px; }
+    header .subtitle { font-size: 0.78rem; color: #cbd5e1; }
+    .user-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.12);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+    }
+    .btn-logout {
+      background: #ef4444;
+      color: #fff;
+      border: none;
+      padding: 5px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .btn-logout:hover { background: #dc2626; }
+
+    nav.tabs {
+      background: #fff;
+      border-bottom: 1px solid var(--slate-200);
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0 24px;
+      gap: 4px;
+    }
+    nav.tabs button {
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      padding: 13px 18px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--slate-600);
+      cursor: pointer;
+      transition: 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    nav.tabs button:hover { color: var(--primary); background: var(--slate-50); }
+    nav.tabs button.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+    .badge-count {
+      background: var(--danger);
+      color: #fff;
+      font-size: 0.72rem;
+      padding: 1px 7px;
+      border-radius: 10px;
+    }
+
+    main { max-width: 1360px; margin: 22px auto; padding: 0 20px 60px; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Cards & Forms */
+    .card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+      margin-bottom: 20px;
+      border: 1px solid var(--slate-200);
+    }
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--slate-200);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+
+    .form-group { display: flex; flex-direction: column; gap: 5px; }
+    label { font-size: 0.83rem; font-weight: 600; color: var(--slate-700); }
+    label span.req { color: var(--danger); }
+    input, select, textarea {
+      width: 100%;
+      padding: 9px 11px;
+      border: 1px solid var(--slate-400);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      background: #fff;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+    }
+    textarea { resize: vertical; min-height: 68px; }
+
+    /* Buttons */
+    .btn {
+      padding: 9px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.15s;
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-light); }
+    .btn-success { background: var(--success); color: #fff; }
+    .btn-success:hover { background: #166534; }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-danger:hover { background: #991b1b; }
+    .btn-outline {
+      background: #fff;
+      color: var(--slate-700);
+      border: 1px solid var(--slate-400);
+    }
+    .btn-outline:hover { background: var(--slate-100); }
+    .btn-sm { padding: 5px 10px; font-size: 0.8rem; }
+
+    /* Multi-select Work Unit Picker */
+    .multi-picker {
+      border: 1px solid var(--slate-400);
+      border-radius: 6px;
+      background: #fff;
+      padding: 8px;
+    }
+    .selected-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+      min-height: 28px;
+    }
+    .chip {
+      background: var(--primary-bg);
+      color: var(--primary);
+      border: 1px solid #bfdbfe;
+      padding: 3px 9px;
+      border-radius: 14px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .chip button {
+      background: none;
+      border: none;
+      color: var(--danger);
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.95rem;
+      line-height: 1;
+    }
+    .picker-controls { display: flex; gap: 6px; flex-wrap: wrap; }
+    .picker-dropdown {
+      max-height: 170px;
+      overflow-y: auto;
+      border: 1px solid var(--slate-200);
+      border-radius: 5px;
+      margin-top: 6px;
+      display: none;
+      background: #fff;
+    }
+    .picker-dropdown.open { display: block; }
+    .picker-item {
+      padding: 7px 10px;
+      font-size: 0.86rem;
+      cursor: pointer;
+      border-bottom: 1px solid var(--slate-100);
+    }
+    .picker-item:hover { background: var(--primary-bg); }
+
+    /* Dynamic Finding Rows */
+    .finding-box {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-left: 4px solid var(--primary);
+      border-radius: 6px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+    .finding-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 0.9rem;
+    }
+
+    /* Tables & Badges */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th, td {
+      padding: 10px 11px;
+      text-align: left;
+      border-bottom: 1px solid var(--slate-200);
+      vertical-align: top;
+    }
+    th {
+      background: var(--slate-100);
+      color: var(--slate-700);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:hover td { background: #f8fafc; }
+
+    .pill {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 12px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .pill-green { background: var(--success-bg); color: var(--success); }
+    .pill-amber { background: var(--warning-bg); color: var(--warning); }
+    .pill-red { background: var(--danger-bg); color: var(--danger); }
+    .pill-blue { background: var(--info-bg); color: var(--info); }
+    .pill-gray { background: var(--slate-200); color: var(--slate-700); }
+
+    /* KPI Cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .kpi-card {
+      background: #fff;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+    .kpi-label { font-size: 0.78rem; font-weight: 700; color: var(--slate-600); text-transform: uppercase; }
+    .kpi-val { font-size: 1.75rem; font-weight: 800; margin: 4px 0; color: var(--slate-900); }
+    .kpi-sub { font-size: 0.78rem; color: var(--slate-600); }
+
+    /* Auth Screen */
+    .auth-wrapper {
+      max-width: 440px;
+      margin: 48px auto;
+      background: #fff;
+      padding: 28px;
+      border-radius: 10px;
+      box-shadow: 0 6px 24px rgba(15, 23, 42, 0.1);
+      border: 1px solid var(--slate-200);
+    }
+    .auth-tabs {
+      display: flex;
+      border-bottom: 2px solid var(--slate-200);
+      margin-bottom: 18px;
+    }
+    .auth-tabs button {
+      flex: 1;
+      padding: 10px;
+      background: none;
+      border: none;
+      font-weight: 700;
+      color: var(--slate-600);
+      cursor: pointer;
+    }
+    .auth-tabs button.active {
+      color: var(--primary);
+      border-bottom: 2px solid var(--primary);
+      margin-bottom: -2px;
+    }
+
+    .alert {
+      padding: 11px 14px;
+      border-radius: 6px;
+      font-size: 0.86rem;
+      margin-bottom: 14px;
+      display: none;
+    }
+    .alert.show { display: block; }
+    .alert-error { background: var(--danger-bg); color: var(--danger); border: 1px solid #fecaca; }
+    .alert-success { background: var(--success-bg); color: var(--success); border: 1px solid #bbf7d0; }
+    .alert-info { background: var(--info-bg); color: var(--info); border: 1px solid #bae6fd; }
+
+    /* Narrative Box */
+    .narrative-box {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-left: 5px solid var(--primary);
+      padding: 18px;
+      border-radius: 6px;
+      font-size: 0.94rem;
+      line-height: 1.7;
+      color: var(--slate-900);
+    }
+    .narrative-box p { margin-bottom: 10px; }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed; inset: 0; background: rgba(15,23,42,0.55);
+      display: none; align-items: center; justify-content: center; padding: 16px; z-index: 1000;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal {
+      background: #fff; border-radius: 10px; max-width: 520px; width: 100%;
+      padding: 22px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .hidden { display: none !important; }
+
+    @media print {
+      header, nav.tabs, .no-print { display: none !important; }
+      body { background: #fff; }
+      main { margin: 0; padding: 0; max-width: 100%; }
+      .card { box-shadow: none; border: 1px solid #cbd5e1; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP HEADER -->
+  <header>
+    <div>
+      <h1>Internal Audit Ratification & Corrective Action Tracking</h1>
+      <div class="subtitle">Real-Time Departmental Follow-Up system</div>
+    </div>
+    <div id="headerUserArea" class="user-badge hidden">
+      <span id="headerUserInfo"></span>
+      <button class="btn-logout" id="btnLogout">Logout</button>
+    </div>
+  </header>
+
+  <!-- LOGIN / REGISTRATION VIEW -->
+  <div id="authSection" class="auth-wrapper">
+    <div style="text-align:center; margin-bottom:16px;">
+      <h2 style="color:var(--primary); font-size:1.25rem;">Auditor Portal Access</h2>
+      <p style="font-size:0.83rem; color:var(--slate-600);">Authorized Internal Audit Personnel Only</p>
+    </div>
+
+    <div id="authAlert" class="alert"></div>
+
+    <div class="auth-tabs">
+      <button type="button" id="tabBtnLogin" class="active">Sign In</button>
+      <button type="button" id="tabBtnRegister">Register Account</button>
+    </div>
+
+    <!-- Login Form -->
+    <form id="loginForm">
+      <div class="form-group" style="margin-bottom:13px;">
+        <label>Employee ID <span class="req">*</span></label>
+        <input type="text" id="loginId" placeholder="Enter your ID" required />
+      </div>
+      <div class="form-group" style="margin-bottom:16px;">
+        <label>Password <span class="req">*</span></label>
+        <input type="password" id="loginPassword" placeholder="Enter your password" required />
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Login to System</button>
+    </form>
+
+    <!-- Registration Form -->
+    <form id="registerForm" class="hidden">
+      <div class="form-group" style="margin-bottom:11px;">
+        <label>Pre-Approved Employee ID <span class="req">*</span></label>
+        <input type="text" id="regId" placeholder="Enter your ID" required />
+      </div>
+      <div class="form-group" style="margin-bottom:11px;">
+        <label>Full Name <span class="req">*</span></label>
+        <input type="text" id="regName" placeholder="Enter your full name" required />
+      </div>
+      <div class="form-group" style="margin-bottom:11px;">
+        <label>Position / Title <span class="req">*</span></label>
+        <input type="text" id="regPosition" placeholder="e.g., Senior Internal Auditor" required />
+      </div>
+      <div class="form-group" style="margin-bottom:15px;">
+        <label>Create Password (min. 6 characters) <span class="req">*</span></label>
+        <input type="password" id="regPassword" minlength="6" placeholder="Choose a secure password" required />
+      </div>
+      <button type="submit" class="btn btn-success" style="width:100%; justify-content:center;">Submit Registration for Approval</button>
+    </form>
+
+    <!-- Pending Approval Box -->
+    <div id="pendingNotice" class="hidden" style="text-align:center; padding:12px 0;">
+      <div class="pill pill-amber" style="font-size:0.88rem; margin-bottom:10px;">Registration Pending Approval</div>
+      <p style="font-size:0.9rem; color:var(--slate-700); margin-bottom:14px;">
+        Your account (<strong id="pendingUserDisplay"></strong>) has been registered and is awaiting verification by the System Administrator (ID: 02249).
+      </p>
+      <button type="button" class="btn btn-outline btn-sm" id="btnPendingLogout">Return to Login</button>
+    </div>
+  </div>
+
+  <!-- MAIN APPLICATION DASHBOARD -->
+  <div id="appSection" class="hidden">
+    <nav class="tabs no-print">
+      <button type="button" class="tab-btn active" data-target="tabInput">1. Finding Input</button>
+      <button type="button" class="tab-btn" data-target="tabProgress">2. Action Progress <span id="navOverdueBadge" class="badge-count hidden">0</span></button>
+      <button type="button" class="tab-btn" data-target="tabReport">3. Quarterly Executive Report</button>
+      <button type="button" class="tab-btn hidden" id="navAdminBtn" data-target="tabAdmin">4. Administrator <span id="navPendingBadge" class="badge-count hidden">0</span></button>
+    </nav>
+
+    <main>
+      <div id="globalAlert" class="alert"></div>
+
+      <!-- TAB 1: FINDING INPUT -->
+      <section id="tabInput" class="tab-panel active">
+        <form id="engagementForm">
+          <div class="card">
+            <div class="card-title">
+              <span>Section A: Audit Engagement Details</span>
+              <span style="font-size:0.78rem; font-weight:500; color:var(--slate-600);">Fiscal Year: Q1 (Jul-Sep) | Q2 (Oct-Dec) | Q3 (Jan-Mar) | Q4 (Apr-Jun)</span>
+            </div>
+
+            <div class="grid-4" style="margin-bottom:14px;">
+              <div class="form-group">
+                <label>Audit Fiscal Year <span class="req">*</span></label>
+                <select id="auditYear" required></select>
+              </div>
+              <div class="form-group">
+                <label>Audit Quarter <span class="req">*</span></label>
+                <select id="auditQuarter" required>
+                  <option value="Q1 (Jul - Sep)">Q1 (July, August, September)</option>
+                  <option value="Q2 (Oct - Dec)">Q2 (October, November, December)</option>
+                  <option value="Q3 (Jan - Mar)">Q3 (January, February, March)</option>
+                  <option value="Q4 (Apr - Jun)">Q4 (April, May, June)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Engagement Reference No. <span class="req">*</span></label>
+                <input type="text" id="engagementRef" placeholder="e.g., IA/2026/Q2/014" required />
+              </div>
+              <div class="form-group">
+                <label>Report Issue Date <span class="req">*</span></label>
+                <input type="date" id="reportIssueDate" required />
+              </div>
+            </div>
+
+            <div class="grid-3" style="margin-bottom:14px;">
+              <div class="form-group">
+                <label>Audit Period From <span class="req">*</span></label>
+                <input type="date" id="periodFrom" required />
+              </div>
+              <div class="form-group">
+                <label>Audit Period To <span class="req">*</span></label>
+                <input type="date" id="periodTo" required />
+              </div>
+              <div class="form-group">
+                <label>Project / Audit Type <span class="req">*</span></label>
+                <select id="projectSelect" required></select>
+                <input type="text" id="customProjectInput" class="hidden" style="margin-top:6px;" placeholder="Enter custom project name..." />
+              </div>
+            </div>
+
+            <!-- Multi-Select + Manual Work Units -->
+            <div class="form-group">
+              <label>Audited Work Unit(s) — Select one or more, or add manually <span class="req">*</span></label>
+              <div class="multi-picker">
+                <div class="selected-chips" id="selectedUnitsChips">
+                  <span style="font-size:0.8rem; color:var(--slate-400);" id="noUnitsHint">No work units selected yet...</span>
+                </div>
+                <div class="picker-controls">
+                  <input type="text" id="workUnitSearch" placeholder="Search 135+ branches/districts or type new work unit..." style="flex:1; min-width:220px;" />
+                  <button type="button" class="btn btn-outline btn-sm" id="btnAddCustomUnit">+ Add Manual Unit</button>
+                </div>
+                <div class="picker-dropdown" id="workUnitDropdown"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section B: Multiple Findings -->
+          <div class="card">
+            <div class="card-title">
+              <span>Section B: Audit Findings & Action Plan Commitments</span>
+              <button type="button" class="btn btn-outline btn-sm" id="btnAddFindingRow">+ Add Another Finding</button>
+            </div>
+
+            <div id="findingsContainer"></div>
+
+            <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+              <button type="button" class="btn btn-outline" id="btnResetForm">Clear Form</button>
+              <button type="submit" class="btn btn-primary">Save Engagement & Findings</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- TAB 2: ACTION PROGRESS -->
+      <section id="tabProgress" class="tab-panel">
+        <div class="card">
+          <div class="card-title">
+            <span>Action Plan & Ratification Progress Tracker</span>
+            <span style="font-size:0.8rem; font-weight:500; color:var(--slate-600);">Live Schedule Monitoring (System Date vs. Target Date / Actual Completion Date)</span>
+          </div>
+
+          <!-- Filters -->
+          <div class="grid-4" style="margin-bottom:16px;">
+            <div class="form-group">
+              <label>Filter by Fiscal Year</label>
+              <select id="filterYear"><option value="ALL">All Fiscal Years</option></select>
+            </div>
+            <div class="form-group">
+              <label>Filter by Quarter</label>
+              <select id="filterQuarter">
+                <option value="ALL">All Quarters</option>
+                <option value="Q1 (Jul - Sep)">Q1 (Jul - Sep)</option>
+                <option value="Q2 (Oct - Dec)">Q2 (Oct - Dec)</option>
+                <option value="Q3 (Jan - Mar)">Q3 (Jan - Mar)</option>
+                <option value="Q4 (Apr - Jun)">Q4 (Apr - Jun)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Filter by Action Status</label>
+              <select id="filterStatus">
+                <option value="ALL">All Statuses</option>
+                <option value="Not Taken">Not Taken</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Action Taken">Action Taken</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Search Work Unit / Ref / Finding</label>
+              <input type="text" id="filterSearch" placeholder="Type branch, ref #, or keyword..." />
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Ref # & Quarter</th>
+                  <th>Audited Work Unit</th>
+                  <th>Audit Finding & Project</th>
+                  <th>Responsible Person</th>
+                  <th>Target Date</th>
+                  <th>Action Status</th>
+                  <th>Schedule Status & Variance</th>
+                  <th>Last Updated By</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="progressTableBody">
+                <tr><td colspan="9" style="text-align:center; padding:20px; color:var(--slate-600);">Loading audit findings...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: REPORT TAB -->
+      <section id="tabReport" class="tab-panel">
+        <div class="card no-print">
+          <div class="card-title">
+            <span>Quarterly Report Filter & Export</span>
+            <button type="button" class="btn btn-primary btn-sm" onclick="window.print()">Print / Save Report as PDF</button>
+          </div>
+          <div class="grid-3">
+            <div class="form-group">
+              <label>Select Fiscal Year</label>
+              <select id="repYear"><option value="ALL">All Fiscal Years</option></select>
+            </div>
+            <div class="form-group">
+              <label>Select Audit Quarter</label>
+              <select id="repQuarter">
+                <option value="ALL">All Quarters (Annual Summary)</option>
+                <option value="Q1 (Jul - Sep)">Q1 (July - September)</option>
+                <option value="Q2 (Oct - Dec)">Q2 (October - December)</option>
+                <option value="Q3 (Jan - Mar)">Q3 (January - March)</option>
+                <option value="Q4 (Apr - Jun)">Q4 (April - June)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Filter by Specific Work Unit (Optional)</label>
+              <select id="repUnit"><option value="ALL">All Audited Work Units</option></select>
+            </div>
+          </div>
+        </div>
+
+        <!-- KPI Summary Cards -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">Total Findings Raised</div>
+            <div class="kpi-val" id="kpiTotal">0</div>
+            <div class="kpi-sub" id="kpiEngagements">Across 0 engagements</div>
+          </div>
+          <div class="kpi-card" style="border-top:4px solid var(--success);">
+            <div class="kpi-label">Action Taken (Ratified)</div>
+            <div class="kpi-val" style="color:var(--success);" id="kpiTaken">0</div>
+            <div class="kpi-sub" id="kpiTakenPct">0% implementation rate</div>
+          </div>
+          <div class="kpi-card" style="border-top:4px solid var(--warning);">
+            <div class="kpi-label">In Progress</div>
+            <div class="kpi-val" style="color:var(--warning);" id="kpiProgress">0</div>
+            <div class="kpi-sub" id="kpiProgressPct">0% currently underway</div>
+          </div>
+          <div class="kpi-card" style="border-top:4px solid var(--danger);">
+            <div class="kpi-label">No Action Taken</div>
+            <div class="kpi-val" style="color:var(--danger);" id="kpiNotTaken">0</div>
+            <div class="kpi-sub" id="kpiNotTakenPct">0% unaddressed</div>
+          </div>
+          <div class="kpi-card" style="border-top:4px solid #7f1d1d;">
+            <div class="kpi-label">Behind Schedule (Open)</div>
+            <div class="kpi-val" style="color:#7f1d1d;" id="kpiDelayed">0</div>
+            <div class="kpi-sub">Past target date & unresolved</div>
+          </div>
+        </div>
+
+        <!-- Executive Narrative -->
+        <div class="card">
+          <div class="card-title">
+            <span>Executive Summary Report Narrative</span>
+            <span style="font-size:0.8rem; color:var(--slate-600);" id="reportGeneratedDate"></span>
+          </div>
+          <div class="narrative-box" id="executiveNarrative"></div>
+        </div>
+
+        <!-- Breakdown by Work Unit -->
+        <div class="card">
+          <div class="card-title"><span>Summary Breakdown by Audited Work Unit</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Audited Work Unit</th>
+                  <th>Total Findings</th>
+                  <th>Action Taken</th>
+                  <th>In Progress</th>
+                  <th>No Action Taken</th>
+                  <th>Behind Schedule (Open)</th>
+                  <th>Completion Rate</th>
+                </tr>
+              </thead>
+              <tbody id="reportUnitTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: ADMINISTRATOR TAB -->
+      <section id="tabAdmin" class="tab-panel">
+        <div class="card">
+          <div class="card-title">
+            <span>User Access Control & Registration Approval Queue</span>
+            <span style="font-size:0.8rem; color:var(--slate-600);">Cross-check Name & Position against Employee ID before approving</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Employee ID</th>
+                  <th>Registered Full Name</th>
+                  <th>Position / Title</th>
+                  <th>Role</th>
+                  <th>Account Status</th>
+                  <th>Registered On</th>
+                  <th>Administrator Actions</th>
+                </tr>
+              </thead>
+              <tbody id="adminUsersTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><span>Authorized Employee ID Whitelist (19 Pre-Approved IDs)</span></div>
+          <p style="font-size:0.86rem; color:var(--slate-700); margin-bottom:10px;">
+            Only users registering with one of the following IDs can submit a registration request. ID <strong>02249</strong> holds System Administrator privileges.
+          </p>
+          <div id="whitelistBadges" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- MODAL FOR UPDATING ACTION PROGRESS -->
+  <div class="modal-backdrop" id="progressModal">
+    <div class="modal">
+      <div class="card-title" style="margin-bottom:12px;">
+        <span>Update Corrective Action Status</span>
+        <button type="button" class="btn btn-outline btn-sm" id="btnCloseModal">X</button>
+      </div>
+      <div id="modalFindingContext" style="background:var(--slate-50); padding:10px; border-radius:6px; font-size:0.84rem; margin-bottom:14px; border:1px solid var(--slate-200);"></div>
+
+      <form id="updateProgressForm">
+        <input type="hidden" id="modalFindingId" />
+        <div class="form-group" style="margin-bottom:12px;">
+          <label>Current Action Status <span class="req">*</span></label>
+          <select id="modalStatus" required>
+            <option value="Not Taken">Not Taken</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Action Taken">Action Taken (Completed / Ratified)</option>
+          </select>
+        </div>
+
+        <div class="form-group hidden" id="modalCompletionDateGroup" style="margin-bottom:12px;">
+          <label>Actual Action Completion Date <span class="req">*</span></label>
+          <input type="date" id="modalCompletionDate" />
+          <small style="color:var(--slate-600); font-size:0.76rem;">Locks in whether action was completed on time or delayed relative to the target date.</small>
+        </div>
+
+        <div class="form-group" style="margin-bottom:14px;">
+          <label>Follow-Up Remark / Evidence Reference <span class="req">*</span></label>
+          <textarea id="modalRemark" placeholder="Describe management response, verification evidence, or reason for delay..." required></textarea>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:8px;">
+          <button type="button" class="btn btn-outline" id="btnCancelModal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Progress Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- FIREBASE & APPLICATION LOGIC -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      createUserWithEmailAndPassword,
+      signOut,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+    import {
+      getFirestore,
+      doc,
+      setDoc,
+      getDoc,
+      updateDoc,
+      deleteDoc,
+      collection,
+      addDoc,
+      onSnapshot,
+      query,
+      orderBy,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+    // =========================================================================
+    // 1. PASTE YOUR FIREBASE CONFIGURATION HERE
+    // =========================================================================
+    const firebaseConfig = {
+      apiKey: "AIzaSyDr8KZovD-lXBLreCkdtbBQD6Qq-IOs8ro",
+      authDomain: "internal-audit-tracker-f92de.firebaseapp.com",
+      projectId: "internal-audit-tracker-f92de",
+      storageBucket: "internal-audit-tracker-f92de.appspot.com",
+      messagingSenderId: "326483270155",
+      appId: "1:326483270155:web:bd2c5c75de259286a7050e"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // =========================================================================
+    // 2. MASTER CONSTANTS & LISTS
+    // =========================================================================
+    const ADMIN_ID = "02249";
+    const ALLOWED_IDS = [
+      "00805", "00896", "01412", "01546", "01532", "00835", "01689",
+      "01635", "02249", "02268", "01459", "01721", "01539", "02201",
+      "02199", "02108", "02126", "02153", "02104"
+    ];
+
+    const DEFAULT_PROJECTS = [
+      "Comprehensive Compliance Audit",
+      "Performance on Third Party Recovery Audit",
+      "Performance on Claim Handling Audit",
+      "Performance in Purchase Handling Audit",
+      "Transaction Audit",
+      "Outstanding Claims Reserve Audit",
+      "Year-End Financial Statement Review Audit",
+      "Special Investigation Audit",
+      "Performance on Trade Debtors Audit",
+      "Payroll Administration Audit",
+      "IT Audit"
+    ];
+
+    const DEFAULT_WORK_UNITS = [
+      "Adama Branch I", "Adama District", "Adama Life Branch", "Adama Satellite Branch",
+      "Adigrat Branch", "Agaro Satellite Office", "Alemgena Branch II", "Ambo Branch",
+      "Arada District", "Arbaminch Branch", "Arerti Satellite Office", "Ashewa Meda Satellite Office",
+      "Assela Branch", "Assosa Branch", "Autobus Tera Branch", "Awaday Satellite Branch",
+      "Awash Branch", "Axum Branch", "Bahir Dar District", "Bahir Dar Branch I",
+      "Bahir Dar Branch III", "Bako Satellite Office", "Bati Life Branch", "Batu Branch",
+      "Bedelle Branch", "Beklo Bet Branch", "Bekoji Branch", "Bethel Branch",
+      "Biherawi Area Branch I", "Bishoftu Branch", "Bisrat Gabriel Branch", "Bole Lemi IP Satellite Office",
+      "Bole Branch", "Bole Life Branch", "Bonga Branch", "Bule Hora Branch",
+      "Burayu Branch", "Butajira Branch", "Central Addis District", "Chiro Branch",
+      "Combolcha Branch", "Debark Branch", "Debre Birhan Branch", "Debre Markos Branch",
+      "Debre Tabor Branch", "Dedessa Life Branch", "Dembidolo Branch", "Dessie Branch",
+      "Dessie Life Satellite Branch", "Dilla Branch", "Dire Dawa District", "Dire Dawa Life Branch",
+      "Dire Dawa Branch I", "Dire Dawa Satellite Office", "Dodolla Branch", "Durame Branch",
+      "Eastern Addis District", "Micro Insurance Business", "Fiche Branch", "Gambela Branch",
+      "Gelemso Branch", "Genda Weha Satellite Office", "Gibe Life Branch", "Gimbi Branch",
+      "Ginir Satellite Office", "Gode Satellite Office", "Gofa Branch", "Gondar Branch",
+      "Gondar Life Branch", "Government Offices Service Center", "Gulele Branch", "Halaba Satellite Branch",
+      "Harar Branch", "Hawassa Branch I", "Hawassa District", "Hawassa Life Branch",
+      "Hawassa Satellite Office", "Head Office", "Holeta Satellite Branch", "Hossana Branch",
+      "Humera Branch", "Injibara Branch", "Jigjiga Branch", "Jimma Branch I",
+      "Jimma District", "Jinka Branch", "Kality Branch", "Kombolcha IP Satellite Office",
+      "Konso Satellite Office", "Legetafo Branch", "Lideta Branch", "Life Addis District",
+      "Maichew Satellite Office", "Megenagna Branch", "Megenagna Life Branch", "Mekelle Branch I",
+      "Mekelle District", "Mekelle Satellite Office", "Meki Satellite Office", "Merkato Branch",
+      "Merkato Life Branch", "Meskel Area Branch I", "Metu Branch", "Mexico Branch",
+      "Mizan Aman Branch", "Mojo Branch", "Motta Satellite Office", "Nekemte District",
+      "Nifas Silk Satellite Office", "Northern Addis District", "Premium Customers Service Center",
+      "Public Enterprise Service Center", "Ras Area Branch I", "Robe Branch", "Saris Branch",
+      "Sawla Branch", "Semera Branch", "Shambu Branch", "Shashemene Branch",
+      "Shewa Robit Branch III", "Shire Endasellassie Branch", "Sikel Satellite Office",
+      "Southern Addis District", "Stadium Area Branch I", "Sululta Satellite Office",
+      "Tana Life Branch", "Tekeze Life Branch", "Werabe Satellite Office", "Wereta Satellite Office",
+      "Western Addis District", "Woldiya Branch", "Woliso Satellite Branch", "Wolkite Branch",
+      "Wolaita Sodo Branch", "Yabelo Satellite Branch", "Yerer Branch"
+    ].sort();
+
+    // =========================================================================
+    // 3. APPLICATION STATE
+    // =========================================================================
+    let currentUserProfile = null;
+    let selectedWorkUnits = [];
+    let allFindings = [];
+    let allUsers = [];
+    let unsubFindings = null;
+    let unsubUsers = null;
+
+    // =========================================================================
+    // 4. DATE & SCHEDULE VARIANCE UTILITIES
+    // =========================================================================
+    function getTodayISO() {
+      const now = new Date();
+      const offset = now.getTimezoneOffset();
+      const local = new Date(now.getTime() - offset * 60000);
+      return local.toISOString().split("T")[0];
+    }
+
+    function diffDays(dateAStr, dateBStr) {
+      // Returns (dateA - dateB) in whole days
+      const a = new Date(dateAStr + "T00:00:00");
+      const b = new Date(dateBStr + "T00:00:00");
+      return Math.round((a - b) / (1000 * 60 * 60 * 24));
+    }
+
+    function evaluateSchedule(finding) {
+      const today = getTodayISO();
+      const target = finding.targetDate;
+
+      if (finding.status === "Action Taken") {
+        const compDate = finding.completionDate || today;
+        const variance = diffDays(compDate, target);
+        if (variance <= 0) {
+          return {
+            label: `Completed On Time (${compDate})`,
+            badgeClass: "pill-green",
+            isDelayedOpen: false,
+            daysDelayed: 0
+          };
+        } else {
+          return {
+            label: `Completed ${variance} day(s) late (${compDate})`,
+            badgeClass: "pill-blue",
+            isDelayedOpen: false,
+            daysDelayed: variance
+          };
+        }
+      }
+
+      // Status is Not Taken or In Progress -> compare System Date vs Target Date
+      const variance = diffDays(today, target);
+      if (variance <= 0) {
+        const daysLeft = Math.abs(variance);
+        return {
+          label: daysLeft === 0 ? "On Schedule (Due Today)" : `On Schedule (${daysLeft} day(s) left)`,
+          badgeClass: "pill-green",
+          isDelayedOpen: false,
+          daysDelayed: 0
+        };
+      } else {
+        return {
+          label: `Behind Schedule (${variance} day(s) delayed)`,
+          badgeClass: "pill-red",
+          isDelayedOpen: true,
+          daysDelayed: variance
+        };
+      }
+    }
+
+    function showAlert(elId, msg, type = "error") {
+      const el = document.getElementById(elId);
+      el.textContent = msg;
+      el.className = `alert show alert-${type}`;
+      setTimeout(() => { el.classList.remove("show"); }, 6000);
+    }
+
+    // =========================================================================
+    // 5. AUTHENTICATION & REGISTRATION
+    // =========================================================================
+    const idToEmail = (empId) => `${empId.trim()}@internalaudit.local`;
+
+    document.getElementById("tabBtnLogin").addEventListener("click", () => {
+      document.getElementById("tabBtnLogin").classList.add("active");
+      document.getElementById("tabBtnRegister").classList.remove("active");
+      document.getElementById("loginForm").classList.remove("hidden");
+      document.getElementById("registerForm").classList.add("hidden");
+      document.getElementById("pendingNotice").classList.add("hidden");
+    });
+
+    document.getElementById("tabBtnRegister").addEventListener("click", () => {
+      document.getElementById("tabBtnRegister").classList.add("active");
+      document.getElementById("tabBtnLogin").classList.remove("active");
+      document.getElementById("registerForm").classList.remove("hidden");
+      document.getElementById("loginForm").classList.add("hidden");
+      document.getElementById("pendingNotice").classList.add("hidden");
+    });
+
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const empId = document.getElementById("loginId").value.trim();
+      const pwd = document.getElementById("loginPassword").value;
+
+      if (!ALLOWED_IDS.includes(empId)) {
+        showAlert("authAlert", "Access Denied: Employee ID is not on the authorized department roster.", "error");
+        return;
+      }
+      try {
+        await signInWithEmailAndPassword(auth, idToEmail(empId), pwd);
+      } catch (err) {
+        showAlert("authAlert", "Login failed: Invalid ID or password. If you haven't registered yet, use the Register tab.", "error");
+      }
+    });
+
+    document.getElementById("registerForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const empId = document.getElementById("regId").value.trim();
+      const fullName = document.getElementById("regName").value.trim();
+      const position = document.getElementById("regPosition").value.trim();
+      const pwd = document.getElementById("regPassword").value;
+
+      if (!ALLOWED_IDS.includes(empId)) {
+        showAlert("authAlert", `ID "${empId}" is not in the pre-approved list of 19 department IDs.`, "error");
+        return;
+      }
+
+      try {
+        const cred = await createUserWithEmailAndPassword(auth, idToEmail(empId), pwd);
+        const isInitialAdmin = empId === ADMIN_ID;
+        await setDoc(doc(db, "users", cred.user.uid), {
+          uid: cred.user.uid,
+          empId,
+          fullName,
+          position,
+          role: isInitialAdmin ? "admin" : "auditor",
+          approved: isInitialAdmin ? true : false,
+          createdAt: serverTimestamp()
+        });
+        showAlert("authAlert", isInitialAdmin
+          ? "Administrator account activated!"
+          : "Registration submitted! Awaiting Administrator approval.", "success");
+      } catch (err) {
+        showAlert("authAlert", "Registration error: " + err.message, "error");
+      }
+    });
+
+    const handleLogout = async () => {
+      if (unsubFindings) unsubFindings();
+      if (unsubUsers) unsubUsers();
+      await signOut(auth);
+    };
+    document.getElementById("btnLogout").addEventListener("click", handleLogout);
+    document.getElementById("btnPendingLogout").addEventListener("click", handleLogout);
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        currentUserProfile = null;
+        document.getElementById("authSection").classList.remove("hidden");
+        document.getElementById("appSection").classList.add("hidden");
+        document.getElementById("headerUserArea").classList.add("hidden");
+        document.getElementById("pendingNotice").classList.add("hidden");
+        document.getElementById("loginForm").classList.remove("hidden");
+        return;
+      }
+
+      const userSnap = await getDoc(doc(db, "users", user.uid));
+      if (!userSnap.exists()) {
+        await signOut(auth);
+        return;
+      }
+
+      currentUserProfile = userSnap.data();
+
+      // Auto-elevate ID 02249 if needed
+      if (currentUserProfile.empId === ADMIN_ID && (!currentUserProfile.approved || currentUserProfile.role !== "admin")) {
+        await updateDoc(doc(db, "users", user.uid), { approved: true, role: "admin" });
+        currentUserProfile.approved = true;
+        currentUserProfile.role = "admin";
+      }
+
+      if (!currentUserProfile.approved) {
+        document.getElementById("authSection").classList.remove("hidden");
+        document.getElementById("appSection").classList.add("hidden");
+        document.getElementById("loginForm").classList.add("hidden");
+        document.getElementById("registerForm").classList.add("hidden");
+        document.getElementById("pendingNotice").classList.remove("hidden");
+        document.getElementById("pendingUserDisplay").textContent = `${currentUserProfile.fullName} (ID: ${currentUserProfile.empId})`;
+        return;
+      }
+
+      // Approved User -> Enter Dashboard
+      document.getElementById("authSection").classList.add("hidden");
+      document.getElementById("appSection").classList.remove("hidden");
+      document.getElementById("headerUserArea").classList.remove("hidden");
+      document.getElementById("headerUserInfo").textContent =
+        `${currentUserProfile.fullName} (${currentUserProfile.empId}) • ${currentUserProfile.role.toUpperCase()}`;
+
+      if (currentUserProfile.role === "admin") {
+        document.getElementById("navAdminBtn").classList.remove("hidden");
+      } else {
+        document.getElementById("navAdminBtn").classList.add("hidden");
+      }
+
+      initRealtimeListeners();
+    });
+
+    // =========================================================================
+    // 6. TAB NAVIGATION
+    // =========================================================================
+    document.querySelectorAll(".tab-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("active"));
+        document.querySelectorAll(".tab-panel").forEach((p) => p.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById(btn.dataset.target).classList.add("active");
+      });
+    });
+
+    // =========================================================================
+    // 7. INITIALIZE DROPDOWNS, WORK UNIT MULTI-PICKER & FINDING ROWS
+    // =========================================================================
+    function initFormControls() {
+      // Fiscal Years (2024/25 through 2030/31)
+      const fySelects = ["auditYear", "filterYear", "repYear"];
+      const years = ["2024/2025", "2025/2026", "2026/2027", "2027/2028", "2028/2029", "2029/2030"];
+      fySelects.forEach((id) => {
+        const sel = document.getElementById(id);
+        years.forEach((yr) => {
+          const opt = document.createElement("option");
+          opt.value = yr;
+          opt.textContent = yr;
+          if (id === "auditYear" && yr === "2026/2027") opt.selected = true;
+          sel.appendChild(opt);
+        });
+      });
+
+      // Default Quarter based on current month (Nov = Q2)
+      const month = new Date().getMonth() + 1;
+      const qSel = document.getElementById("auditQuarter");
+      if (month >= 7 && month <= 9) qSel.value = "Q1 (Jul - Sep)";
+      else if (month >= 10 && month <= 12) qSel.value = "Q2 (Oct - Dec)";
+      else if (month >= 1 && month <= 3) qSel.value = "Q3 (Jan - Mar)";
+      else qSel.value = "Q4 (Apr - Jun)";
+
+      document.getElementById("reportIssueDate").value = getTodayISO();
+
+      // Project Dropdown + Custom Option
+      const projSel = document.getElementById("projectSelect");
+      DEFAULT_PROJECTS.forEach((p) => {
+        const opt = document.createElement("option");
+        opt.value = p;
+        opt.textContent = p;
+        projSel.appendChild(opt);
+      });
+      const customOpt = document.createElement("option");
+      customOpt.value = "__CUSTOM__";
+      customOpt.textContent = "+ Other (Type Project Name Manually)...";
+      projSel.appendChild(customOpt);
+
+      projSel.addEventListener("change", () => {
+        const customInput = document.getElementById("customProjectInput");
+        if (projSel.value === "__CUSTOM__") {
+          customInput.classList.remove("hidden");
+          customInput.required = true;
+        } else {
+          customInput.classList.add("hidden");
+          customInput.required = false;
+        }
+      });
+
+      // Whitelist badges in Admin tab
+      const wlContainer = document.getElementById("whitelistBadges");
+      ALLOWED_IDS.forEach((id) => {
+        const span = document.createElement("span");
+        span.className = id === ADMIN_ID ? "pill pill-blue" : "pill pill-gray";
+        span.textContent = id === ADMIN_ID ? `${id} (Admin)` : id;
+        wlContainer.appendChild(span);
+      });
+
+      addFindingRow();
+    }
+
+    // Multi-Select Work Unit Logic
+    const unitSearchInput = document.getElementById("workUnitSearch");
+    const unitDropdown = document.getElementById("workUnitDropdown");
+
+    function renderWorkUnitDropdown(filterText = "") {
+      const term = filterText.toLowerCase().trim();
+      const matches = DEFAULT_WORK_UNITS.filter(
+        (u) => u.toLowerCase().includes(term) && !selectedWorkUnits.includes(u)
+      );
+      unitDropdown.innerHTML = "";
+      if (matches.length === 0) {
+        unitDropdown.innerHTML = `<div class="picker-item" style="color:var(--slate-600);">No matching predefined unit. Click "+ Add Manual Unit" to add "${filterText}".</div>`;
+      } else {
+        matches.forEach((unit) => {
+          const div = document.createElement("div");
+          div.className = "picker-item";
+          div.textContent = unit;
+          div.addEventListener("click", () => {
+            addWorkUnit(unit);
+            unitSearchInput.value = "";
+            unitDropdown.classList.remove("open");
+          });
+          unitDropdown.appendChild(div);
+        });
+      }
+    }
+
+    function addWorkUnit(unitName) {
+      const clean = unitName.trim();
+      if (!clean || selectedWorkUnits.includes(clean)) return;
+      selectedWorkUnits.push(clean);
+      renderSelectedWorkUnits();
+      refreshFindingRowUnitSelectors();
+    }
+
+    function removeWorkUnit(unitName) {
+      selectedWorkUnits = selectedWorkUnits.filter((u) => u !== unitName);
+      renderSelectedWorkUnits();
+      refreshFindingRowUnitSelectors();
+    }
+
+    function renderSelectedWorkUnits() {
+      const container = document.getElementById("selectedUnitsChips");
+      container.innerHTML = "";
+      if (selectedWorkUnits.length === 0) {
+        container.innerHTML = `<span style="font-size:0.8rem; color:var(--slate-400);">No work units selected yet...</span>`;
+        return;
+      }
+      selectedWorkUnits.forEach((unit) => {
+        const chip = document.createElement("span");
+        chip.className = "chip";
+        chip.innerHTML = `${unit} <button type="button" title="Remove">&times;</button>`;
+        chip.querySelector("button").addEventListener("click", () => removeWorkUnit(unit));
+        container.appendChild(chip);
+      });
+    }
+
+    unitSearchInput.addEventListener("focus", () => {
+      renderWorkUnitDropdown(unitSearchInput.value);
+      unitDropdown.classList.add("open");
+    });
+    unitSearchInput.addEventListener("input", () => {
+      renderWorkUnitDropdown(unitSearchInput.value);
+      unitDropdown.classList.add("open");
+    });
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".multi-picker")) unitDropdown.classList.remove("open");
+    });
+    document.getElementById("btnAddCustomUnit").addEventListener("click", () => {
+      const val = unitSearchInput.value.trim();
+      if (!val) {
+        alert("Type the name of the work unit in the box first, then click '+ Add Manual Unit'.");
+        return;
+      }
+      addWorkUnit(val);
+      unitSearchInput.value = "";
+      unitDropdown.classList.remove("open");
+    });
+
+    // Dynamic Finding Rows
+    function refreshFindingRowUnitSelectors() {
+      document.querySelectorAll(".finding-unit-select").forEach((sel) => {
+        const prev = sel.value;
+        sel.innerHTML = "";
+        if (selectedWorkUnits.length === 0) {
+          sel.innerHTML = `<option value="">-- Select Work Unit in Section A First --</option>`;
+        } else {
+          selectedWorkUnits.forEach((u) => {
+            const opt = document.createElement("option");
+            opt.value = u;
+            opt.textContent = u;
+            sel.appendChild(opt);
+          });
+          if (selectedWorkUnits.includes(prev)) sel.value = prev;
+        }
+      });
+    }
+
+    function addFindingRow() {
+      const container = document.getElementById("findingsContainer");
+      const index = container.children.length + 1;
+      const box = document.createElement("div");
+      box.className = "finding-box";
+      box.innerHTML = `
+        <div class="finding-box-header">
+          <span>Finding #${index}</span>
+          ${index > 1 ? `<button type="button" class="btn btn-danger btn-sm btn-remove-finding">Remove</button>` : ""}
+        </div>
+        <div class="grid-3" style="margin-bottom:10px;">
+          <div class="form-group">
+            <label>Specific Work Unit for This Finding <span class="req">*</span></label>
+            <select class="finding-unit-select" required></select>
+          </div>
+          <div class="form-group">
+            <label>Responsible Person / Official <span class="req">*</span></label>
+            <input type="text" class="finding-responsible" placeholder="Name or Title of Action Owner" required />
+          </div>
+          <div class="form-group">
+            <label>Corrective Action Target Date <span class="req">*</span></label>
+            <input type="date" class="finding-target-date" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Audit Finding Description & Agreed Corrective Action <span class="req">*</span></label>
+          <textarea class="finding-desc" placeholder="Summarize the audit observation and the corrective action agreed by the work unit..." required></textarea>
+        </div>
+      `;
+      if (index > 1) {
+        box.querySelector(".btn-remove-finding").addEventListener("click", () => {
+          box.remove();
+          renumberFindingRows();
+        });
+      }
+      container.appendChild(box);
+      refreshFindingRowUnitSelectors();
+    }
+
+    function renumberFindingRows() {
+      document.querySelectorAll("#findingsContainer .finding-box").forEach((box, idx) => {
+        box.querySelector(".finding-box-header span").textContent = `Finding #${idx + 1}`;
+      });
+    }
+
+    document.getElementById("btnAddFindingRow").addEventListener("click", addFindingRow);
+
+    function resetEngagementForm() {
+      document.getElementById("engagementForm").reset();
+      selectedWorkUnits = [];
+      renderSelectedWorkUnits();
+      document.getElementById("findingsContainer").innerHTML = "";
+      document.getElementById("customProjectInput").classList.add("hidden");
+      document.getElementById("reportIssueDate").value = getTodayISO();
+      addFindingRow();
+    }
+    document.getElementById("btnResetForm").addEventListener("click", resetEngagementForm);
+
+    // Save Engagement & Batch Findings to Firestore
+    document.getElementById("engagementForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (selectedWorkUnits.length === 0) {
+        showAlert("globalAlert", "Please select or add at least one Audited Work Unit in Section A.", "error");
+        return;
+      }
+
+      const auditYear = document.getElementById("auditYear").value;
+      const auditQuarter = document.getElementById("auditQuarter").value;
+      const engagementRef = document.getElementById("engagementRef").value.trim();
+      const reportIssueDate = document.getElementById("reportIssueDate").value;
+      const periodFrom = document.getElementById("periodFrom").value;
+      const periodTo = document.getElementById("periodTo").value;
+      const projVal = document.getElementById("projectSelect").value;
+      const projectName = projVal === "__CUSTOM__"
+        ? document.getElementById("customProjectInput").value.trim()
+        : projVal;
+
+      const findingBoxes = document.querySelectorAll("#findingsContainer .finding-box");
+      try {
+        for (const box of findingBoxes) {
+          const workUnit = box.querySelector(".finding-unit-select").value;
+          const responsiblePerson = box.querySelector(".finding-responsible").value.trim();
+          const targetDate = box.querySelector(".finding-target-date").value;
+          const findingText = box.querySelector(".finding-desc").value.trim();
+
+          await addDoc(collection(db, "findings"), {
+            auditYear,
+            auditQuarter,
+            engagementRef,
+            reportIssueDate,
+            periodFrom,
+            periodTo,
+            projectName,
+            workUnit,
+            responsiblePerson,
+            targetDate,
+            findingText,
+            status: "Not Taken",
+            completionDate: "",
+            remark: "Initial audit finding logged.",
+            createdBy: `${currentUserProfile.fullName} (${currentUserProfile.empId})`,
+            updatedBy: `${currentUserProfile.fullName} (${currentUserProfile.empId})`,
+            updatedAtStr: new Date().toLocaleString(),
+            createdAt: serverTimestamp()
+          });
+        }
+
+        showAlert("globalAlert", `Successfully saved ${findingBoxes.length} finding(s) under Engagement ${engagementRef}!`, "success");
+        resetEngagementForm();
+      } catch (err) {
+        showAlert("globalAlert", "Error saving findings: " + err.message, "error");
+      }
+    });
+
+    // =========================================================================
+    // 8. REAL-TIME FIRESTORE LISTENERS
+    // =========================================================================
+    function initRealtimeListeners() {
+      // Listen to Findings
+      const qFindings = query(collection(db, "findings"), orderBy("createdAt", "desc"));
+      unsubFindings = onSnapshot(qFindings, (snap) => {
+        allFindings = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+        renderProgressTable();
+        populateReportUnitFilter();
+        renderReportTab();
+      });
+
+      // Listen to Users (for Admin tab)
+      if (currentUserProfile.role === "admin") {
+        unsubUsers = onSnapshot(collection(db, "users"), (snap) => {
+          allUsers = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+          renderAdminUsersTable();
+        });
+      }
+    }
+
+    // =========================================================================
+    // 9. ACTION PROGRESS TABLE & UPDATE MODAL
+    // =========================================================================
+    ["filterYear", "filterQuarter", "filterStatus", "filterSearch"].forEach((id) => {
+      document.getElementById(id).addEventListener("input", renderProgressTable);
+      document.getElementById(id).addEventListener("change", renderProgressTable);
+    });
+
+    function renderProgressTable() {
+      const fYear = document.getElementById("filterYear").value;
+      const fQuarter = document.getElementById("filterQuarter").value;
+      const fStatus = document.getElementById("filterStatus").value;
+      const fSearch = document.getElementById("filterSearch").value.toLowerCase().trim();
+
+      let overdueTotal = 0;
+      allFindings.forEach((f) => {
+        if (evaluateSchedule(f).isDelayedOpen) overdueTotal++;
+      });
+      const badge = document.getElementById("navOverdueBadge");
+      badge.textContent = overdueTotal;
+      badge.classList.toggle("hidden", overdueTotal === 0);
+
+      const filtered = allFindings.filter((f) => {
+        if (fYear !== "ALL" && f.auditYear !== fYear) return false;
+        if (fQuarter !== "ALL" && f.auditQuarter !== fQuarter) return false;
+        if (fStatus !== "ALL" && f.status !== fStatus) return false;
+        if (fSearch) {
+          const hay = `${f.workUnit} ${f.engagementRef} ${f.findingText} ${f.responsiblePerson} ${f.projectName}`.toLowerCase();
+          if (!hay.includes(fSearch)) return false;
+        }
+        return true;
+      });
+
+      const tbody = document.getElementById("progressTableBody");
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; padding:20px; color:var(--slate-600);">No audit findings match the selected filters.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = "";
+      filtered.forEach((f) => {
+        const sched = evaluateSchedule(f);
+        let statusPill = "pill-red";
+        if (f.status === "Action Taken") statusPill = "pill-green";
+        else if (f.status === "In Progress") statusPill = "pill-amber";
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>
+            <strong>${f.engagementRef}</strong><br/>
+            <span style="font-size:0.76rem; color:var(--slate-600);">${f.auditYear} • ${f.auditQuarter}</span>
+          </td>
+          <td><strong>${f.workUnit}</strong></td>
+          <td style="max-width:300px;">
+            <div style="font-size:0.75rem; font-weight:700; color:var(--primary);">${f.projectName}</div>
+            <div>${f.findingText}</div>
+            ${f.remark ? `<div style="font-size:0.77rem; color:var(--slate-600); margin-top:4px;"><em>Note: ${f.remark}</em></div>` : ""}
+          </td>
+          <td>${f.responsiblePerson}</td>
+          <td style="white-space:nowrap;">${f.targetDate}</td>
+          <td><span class="pill ${statusPill}">${f.status}</span></td>
+          <td><span class="pill ${sched.badgeClass}">${sched.label}</span></td>
+          <td style="font-size:0.77rem; color:var(--slate-700);">
+            <strong>${f.updatedBy || f.createdBy}</strong><br/>
+            <span style="color:var(--slate-500);">${f.updatedAtStr || ""}</span>
+          </td>
+          <td>
+            <button type="button" class="btn btn-primary btn-sm btn-open-update">Update</button>
+          </td>
+        `;
+        tr.querySelector(".btn-open-update").addEventListener("click", () => openProgressModal(f));
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openProgressModal(finding) {
+      document.getElementById("modalFindingId").value = finding.id;
+      document.getElementById("modalFindingContext").innerHTML = `
+        <strong>Work Unit:</strong> ${finding.workUnit} &nbsp;|&nbsp; <strong>Target Date:</strong> ${finding.targetDate}<br/>
+        <strong>Finding:</strong> ${finding.findingText}
+      `;
+      const statusSel = document.getElementById("modalStatus");
+      statusSel.value = finding.status;
+      document.getElementById("modalCompletionDate").value = finding.completionDate || getTodayISO();
+      document.getElementById("modalRemark").value = finding.remark || "";
+      toggleCompletionDateField();
+      document.getElementById("progressModal").classList.add("open");
+    }
+
+    function toggleCompletionDateField() {
+      const isTaken = document.getElementById("modalStatus").value === "Action Taken";
+      const grp = document.getElementById("modalCompletionDateGroup");
+      const inp = document.getElementById("modalCompletionDate");
+      grp.classList.toggle("hidden", !isTaken);
+      inp.required = isTaken;
+    }
+
+    document.getElementById("modalStatus").addEventListener("change", toggleCompletionDateField);
+    document.getElementById("btnCloseModal").addEventListener("click", () => document.getElementById("progressModal").classList.remove("open"));
+    document.getElementById("btnCancelModal").addEventListener("click", () => document.getElementById("progressModal").classList.remove("open"));
+
+    document.getElementById("updateProgressForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const id = document.getElementById("modalFindingId").value;
+      const status = document.getElementById("modalStatus").value;
+      const completionDate = status === "Action Taken" ? document.getElementById("modalCompletionDate").value : "";
+      const remark = document.getElementById("modalRemark").value.trim();
+
+      try {
+        await updateDoc(doc(db, "findings", id), {
+          status,
+          completionDate,
+          remark,
+          updatedBy: `${currentUserProfile.fullName} (${currentUserProfile.empId})`,
+          updatedAtStr: new Date().toLocaleString()
+        });
+        document.getElementById("progressModal").classList.remove("open");
+        showAlert("globalAlert", "Action progress updated and auditor attribution recorded.", "success");
+      } catch (err) {
+        alert("Failed to update status: " + err.message);
+      }
+    });
+
+    // =========================================================================
+    // 10. QUARTERLY EXECUTIVE REPORT TAB
+    // =========================================================================
+    ["repYear", "repQuarter", "repUnit"].forEach((id) => {
+      document.getElementById(id).addEventListener("change", renderReportTab);
+    });
+
+    function populateReportUnitFilter() {
+      const sel = document.getElementById("repUnit");
+      const current = sel.value;
+      const units = [...new Set(allFindings.map((f) => f.workUnit))].sort();
+      sel.innerHTML = `<option value="ALL">All Audited Work Units</option>`;
+      units.forEach((u) => {
+        const opt = document.createElement("option");
+        opt.value = u;
+        opt.textContent = u;
+        sel.appendChild(opt);
+      });
+      if (units.includes(current)) sel.value = current;
+    }
+
+    function renderReportTab() {
+      const rYear = document.getElementById("repYear").value;
+      const rQuarter = document.getElementById("repQuarter").value;
+      const rUnit = document.getElementById("repUnit").value;
+
+      const subset = allFindings.filter((f) => {
+        if (rYear !== "ALL" && f.auditYear !== rYear) return false;
+        if (rQuarter !== "ALL" && f.auditQuarter !== rQuarter) return false;
+        if (rUnit !== "ALL" && f.workUnit !== rUnit) return false;
+        return true;
+      });
+
+      const total = subset.length;
+      const taken = subset.filter((f) => f.status === "Action Taken").length;
+      const inProg = subset.filter((f) => f.status === "In Progress").length;
+      const notTaken = subset.filter((f) => f.status === "Not Taken").length;
+      const delayedOpen = subset.filter((f) => evaluateSchedule(f).isDelayedOpen).length;
+      const engagements = new Set(subset.map((f) => f.engagementRef)).size;
+
+      const pct = (n) => (total === 0 ? "0.0%" : ((n / total) * 100).toFixed(1) + "%");
+
+      document.getElementById("kpiTotal").textContent = total;
+      document.getElementById("kpiEngagements").textContent = `Across ${engagements} engagement(s)`;
+      document.getElementById("kpiTaken").textContent = taken;
+      document.getElementById("kpiTakenPct").textContent = `${pct(taken)} implementation rate`;
+      document.getElementById("kpiProgress").textContent = inProg;
+      document.getElementById("kpiProgressPct").textContent = `${pct(inProg)} underway`;
+      document.getElementById("kpiNotTaken").textContent = notTaken;
+      document.getElementById("kpiNotTakenPct").textContent = `${pct(notTaken)} unaddressed`;
+      document.getElementById("kpiDelayed").textContent = delayedOpen;
+      document.getElementById("reportGeneratedDate").textContent = `Generated on: ${new Date().toLocaleDateString()}`;
+
+      // Executive Summary Narrative
+      const periodLabel = `${rYear === "ALL" ? "all recorded fiscal years" : "Fiscal Year " + rYear}, ${rQuarter === "ALL" ? "all quarters" : rQuarter}`;
+      const scopeLabel = rUnit === "ALL" ? `across ${new Set(subset.map((f) => f.workUnit)).size} audited work unit(s)` : `specifically for ${rUnit}`;
+
+      const narrativeEl = document.getElementById("executiveNarrative");
+      if (total === 0) {
+        narrativeEl.innerHTML = `<p>No internal audit findings have been recorded for the selected reporting criteria (${periodLabel}).</p>`;
+      } else {
+        narrativeEl.innerHTML = `
+          <p><strong>1. Scope & Overview:</strong> During ${periodLabel}, the Internal Audit Department tracked a total of <strong>${total} audit finding(s)</strong> resulting from <strong>${engagements} audit engagement(s)</strong> ${scopeLabel}.</p>
+          <p><strong>2. Ratification & Corrective Action Status:</strong> Out of the ${total} findings raised, work units have fully implemented and ratified corrective actions for <strong>${taken} finding(s) (${pct(taken)})</strong>. Implementation is currently <strong>In Progress for ${inProg} finding(s) (${pct(inProg)})</strong>, while <strong>${notTaken} finding(s) (${pct(notTaken)})</strong> remain unaddressed with <strong>No Action Taken</strong>.</p>
+          <p><strong>3. Schedule Compliance & Overdue Exposure:</strong> Based on agreed corrective action target dates as of ${getTodayISO()}, <strong>${delayedOpen} open finding(s)</strong> have passed their target completion deadlines and are classified as <strong>Behind Schedule</strong>. Management attention and immediate follow-up are recommended for all behind-schedule items to mitigate unresolved control risks.</p>
+        `;
+      }
+
+      // Breakdown Table by Work Unit
+      const byUnit = {};
+      subset.forEach((f) => {
+        if (!byUnit[f.workUnit]) {
+          byUnit[f.workUnit] = { total: 0, taken: 0, inProg: 0, notTaken: 0, delayed: 0 };
+        }
+        byUnit[f.workUnit].total++;
+        if (f.status === "Action Taken") byUnit[f.workUnit].taken++;
+        else if (f.status === "In Progress") byUnit[f.workUnit].inProg++;
+        else byUnit[f.workUnit].notTaken++;
+        if (evaluateSchedule(f).isDelayedOpen) byUnit[f.workUnit].delayed++;
+      });
+
+      const tbody = document.getElementById("reportUnitTableBody");
+      const unitNames = Object.keys(byUnit).sort();
+      if (unitNames.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:16px; color:var(--slate-600);">No data available for this selection.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = "";
+      unitNames.forEach((u) => {
+        const row = byUnit[u];
+        const rate = ((row.taken / row.total) * 100).toFixed(1) + "%";
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><strong>${u}</strong></td>
+          <td>${row.total}</td>
+          <td><span class="pill pill-green">${row.taken}</span></td>
+          <td><span class="pill pill-amber">${row.inProg}</span></td>
+          <td><span class="pill pill-red">${row.notTaken}</span></td>
+          <td>${row.delayed > 0 ? `<strong style="color:var(--danger);">${row.delayed}</strong>` : "0"}</td>
+          <td><strong>${rate}</strong></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // =========================================================================
+    // 11. ADMINISTRATOR USER MANAGEMENT
+    // =========================================================================
+    function renderAdminUsersTable() {
+      const pendingCount = allUsers.filter((u) => !u.approved).length;
+      const badge = document.getElementById("navPendingBadge");
+      badge.textContent = pendingCount;
+      badge.classList.toggle("hidden", pendingCount === 0);
+
+      const tbody = document.getElementById("adminUsersTableBody");
+      tbody.innerHTML = "";
+
+      const sorted = [...allUsers].sort((a, b) => (a.approved === b.approved ? 0 : a.approved ? 1 : -1));
+      sorted.forEach((u) => {
+        const isPrimaryAdmin = u.empId === ADMIN_ID;
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><strong>${u.empId}</strong></td>
+          <td>${u.fullName}</td>
+          <td>${u.position}</td>
+          <td><span class="pill ${u.role === "admin" ? "pill-blue" : "pill-gray"}">${u.role.toUpperCase()}</span></td>
+          <td><span class="pill ${u.approved ? "pill-green" : "pill-amber"}">${u.approved ? "Approved" : "Pending Approval"}</span></td>
+          <td style="font-size:0.78rem; color:var(--slate-600);">${u.createdAt?.toDate ? u.createdAt.toDate().toLocaleDateString() : "—"}</td>
+          <td style="display:flex; gap:6px; flex-wrap:wrap;">
+            ${!isPrimaryAdmin ? `
+              ${!u.approved
+                ? `<button type="button" class="btn btn-success btn-sm btn-approve">Approve</button>`
+                : `<button type="button" class="btn btn-outline btn-sm btn-suspend">Suspend</button>`}
+              <button type="button" class="btn btn-outline btn-sm btn-toggle-role">${u.role === "admin" ? "Make Auditor" : "Make Admin"}</button>
+              <button type="button" class="btn btn-danger btn-sm btn-delete-user">Reject/Remove</button>
+            ` : `<span style="font-size:0.78rem; color:var(--slate-500);">Primary System Owner</span>`}
+          </td>
+        `;
+
+        if (!isPrimaryAdmin) {
+          const approveBtn = tr.querySelector(".btn-approve");
+          if (approveBtn) approveBtn.addEventListener("click", () => updateDoc(doc(db, "users", u.id), { approved: true }));
+
+          const suspendBtn = tr.querySelector(".btn-suspend");
+          if (suspendBtn) suspendBtn.addEventListener("click", () => updateDoc(doc(db, "users", u.id), { approved: false }));
+
+          tr.querySelector(".btn-toggle-role").addEventListener("click", () =>
+            updateDoc(doc(db, "users", u.id), { role: u.role === "admin" ? "auditor" : "admin" })
+          );
+
+          tr.querySelector(".btn-delete-user").addEventListener("click", async () => {
+            if (confirm(`Remove registration record for ${u.fullName} (${u.empId})?`)) {
+              await deleteDoc(doc(db, "users", u.id));
+            }
+          });
+        }
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    initFormControls();
+  </script>
+</body>
+</html>
