@@ -36,7 +36,6 @@
       line-height: 1.5;
     }
 
-    /* Header & Navigation */
     header {
       background: var(--primary);
       color: #fff;
@@ -83,8 +82,8 @@
       background: none;
       border: none;
       border-bottom: 3px solid transparent;
-      padding: 13px 18px;
-      font-size: 0.9rem;
+      padding: 13px 16px;
+      font-size: 0.88rem;
       font-weight: 600;
       color: var(--slate-600);
       cursor: pointer;
@@ -106,11 +105,10 @@
       border-radius: 10px;
     }
 
-    main { max-width: 1360px; margin: 22px auto; padding: 0 20px 60px; }
+    main { max-width: 1380px; margin: 22px auto; padding: 0 20px 60px; }
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
-    /* Cards & Forms */
     .card {
       background: #fff;
       border-radius: var(--radius);
@@ -156,12 +154,11 @@
     }
     textarea { resize: vertical; min-height: 68px; }
 
-    /* Buttons */
     .btn {
-      padding: 9px 16px;
+      padding: 9px 15px;
       border: none;
       border-radius: 6px;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
@@ -169,19 +166,42 @@
       gap: 6px;
       transition: 0.15s;
     }
+    .btn:disabled { opacity: 0.55; cursor: not-allowed; }
     .btn-primary { background: var(--primary); color: #fff; }
-    .btn-primary:hover { background: var(--primary-light); }
+    .btn-primary:hover:not(:disabled) { background: var(--primary-light); }
     .btn-success { background: var(--success); color: #fff; }
-    .btn-success:hover { background: #166534; }
+    .btn-success:hover:not(:disabled) { background: #166534; }
     .btn-danger { background: var(--danger); color: #fff; }
-    .btn-danger:hover { background: #991b1b; }
+    .btn-danger:hover:not(:disabled) { background: #991b1b; }
     .btn-outline {
       background: #fff;
       color: var(--slate-700);
       border: 1px solid var(--slate-400);
     }
-    .btn-outline:hover { background: var(--slate-100); }
-    .btn-sm { padding: 5px 10px; font-size: 0.8rem; }
+    .btn-outline:hover:not(:disabled) { background: var(--slate-100); }
+    .btn-sm { padding: 5px 10px; font-size: 0.79rem; }
+
+    /* Gemini Config Banner */
+    .ai-bar {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-left: 4px solid #0284c7;
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      margin-bottom: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .ai-bar-inputs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      flex: 1;
+    }
 
     /* Multi-select Work Unit Picker */
     .multi-picker {
@@ -237,6 +257,15 @@
     }
     .picker-item:hover { background: var(--primary-bg); }
 
+    /* Batch Import Box */
+    .batch-panel {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: var(--radius);
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+
     /* Dynamic Finding Rows */
     .finding-box {
       background: var(--slate-50);
@@ -254,6 +283,8 @@
       font-weight: 700;
       color: var(--primary);
       font-size: 0.9rem;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
     /* Tables & Badges */
@@ -277,7 +308,7 @@
       display: inline-block;
       padding: 3px 9px;
       border-radius: 12px;
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       font-weight: 700;
       white-space: nowrap;
     }
@@ -287,10 +318,9 @@
     .pill-blue { background: var(--info-bg); color: var(--info); }
     .pill-gray { background: var(--slate-200); color: var(--slate-700); }
 
-    /* KPI Cards */
     .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 14px;
       margin-bottom: 20px;
     }
@@ -301,11 +331,10 @@
       padding: 16px;
       box-shadow: var(--shadow);
     }
-    .kpi-label { font-size: 0.78rem; font-weight: 700; color: var(--slate-600); text-transform: uppercase; }
-    .kpi-val { font-size: 1.75rem; font-weight: 800; margin: 4px 0; color: var(--slate-900); }
-    .kpi-sub { font-size: 0.78rem; color: var(--slate-600); }
+    .kpi-label { font-size: 0.76rem; font-weight: 700; color: var(--slate-600); text-transform: uppercase; }
+    .kpi-val { font-size: 1.7rem; font-weight: 800; margin: 4px 0; color: var(--slate-900); }
+    .kpi-sub { font-size: 0.77rem; color: var(--slate-600); }
 
-    /* Auth Screen */
     .auth-wrapper {
       max-width: 440px;
       margin: 48px auto;
@@ -347,34 +376,33 @@
     .alert-success { background: var(--success-bg); color: var(--success); border: 1px solid #bbf7d0; }
     .alert-info { background: var(--info-bg); color: var(--info); border: 1px solid #bae6fd; }
 
-    /* Narrative Box */
     .narrative-box {
       background: #f8fafc;
       border: 1px solid #cbd5e1;
       border-left: 5px solid var(--primary);
       padding: 18px;
       border-radius: 6px;
-      font-size: 0.94rem;
-      line-height: 1.7;
+      font-size: 0.93rem;
+      line-height: 1.68;
       color: var(--slate-900);
+      white-space: pre-line;
     }
     .narrative-box p { margin-bottom: 10px; }
 
-    /* Modal */
     .modal-backdrop {
       position: fixed; inset: 0; background: rgba(15,23,42,0.55);
       display: none; align-items: center; justify-content: center; padding: 16px; z-index: 1000;
     }
     .modal-backdrop.open { display: flex; }
     .modal {
-      background: #fff; border-radius: 10px; max-width: 520px; width: 100%;
+      background: #fff; border-radius: 10px; max-width: 540px; width: 100%;
       padding: 22px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
 
     .hidden { display: none !important; }
 
     @media print {
-      header, nav.tabs, .no-print { display: none !important; }
+      header, nav.tabs, .ai-bar, .no-print { display: none !important; }
       body { background: #fff; }
       main { margin: 0; padding: 0; max-width: 100%; }
       .card { box-shadow: none; border: 1px solid #cbd5e1; break-inside: avoid; }
@@ -386,8 +414,8 @@
   <!-- TOP HEADER -->
   <header>
     <div>
-      <h1>Internal Audit Ratification & Corrective Action Tracking</h1>
-      <div class="subtitle">Real-Time Departmental Follow-Up system</div>
+      <h1>Internal Audit Ratification & Corrective Action System</h1>
+      <div class="subtitle">Real-Time Departmental Follow-Up, AI Risk & PDF Ratification Comparison</div>
     </div>
     <div id="headerUserArea" class="user-badge hidden">
       <span id="headerUserInfo"></span>
@@ -409,11 +437,10 @@
       <button type="button" id="tabBtnRegister">Register Account</button>
     </div>
 
-    <!-- Login Form -->
     <form id="loginForm">
       <div class="form-group" style="margin-bottom:13px;">
         <label>Employee ID <span class="req">*</span></label>
-        <input type="text" id="loginId" placeholder="Enter your ID" required />
+        <input type="text" id="loginId" placeholder="e.g., 02249" required />
       </div>
       <div class="form-group" style="margin-bottom:16px;">
         <label>Password <span class="req">*</span></label>
@@ -422,11 +449,10 @@
       <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Login to System</button>
     </form>
 
-    <!-- Registration Form -->
     <form id="registerForm" class="hidden">
       <div class="form-group" style="margin-bottom:11px;">
         <label>Pre-Approved Employee ID <span class="req">*</span></label>
-        <input type="text" id="regId" placeholder="Enter your ID" required />
+        <input type="text" id="regId" placeholder="Enter your 5-digit ID (e.g., 00805)" required />
       </div>
       <div class="form-group" style="margin-bottom:11px;">
         <label>Full Name <span class="req">*</span></label>
@@ -443,11 +469,10 @@
       <button type="submit" class="btn btn-success" style="width:100%; justify-content:center;">Submit Registration for Approval</button>
     </form>
 
-    <!-- Pending Approval Box -->
     <div id="pendingNotice" class="hidden" style="text-align:center; padding:12px 0;">
       <div class="pill pill-amber" style="font-size:0.88rem; margin-bottom:10px;">Registration Pending Approval</div>
       <p style="font-size:0.9rem; color:var(--slate-700); margin-bottom:14px;">
-        Your account (<strong id="pendingUserDisplay"></strong>) has been registered and is awaiting verification by the System Administrator (ID: 02249).
+        Your account (<strong id="pendingUserDisplay"></strong>) is awaiting verification by the System Administrator (ID: 02249).
       </p>
       <button type="button" class="btn btn-outline btn-sm" id="btnPendingLogout">Return to Login</button>
     </div>
@@ -458,12 +483,27 @@
     <nav class="tabs no-print">
       <button type="button" class="tab-btn active" data-target="tabInput">1. Finding Input</button>
       <button type="button" class="tab-btn" data-target="tabProgress">2. Action Progress <span id="navOverdueBadge" class="badge-count hidden">0</span></button>
-      <button type="button" class="tab-btn" data-target="tabReport">3. Quarterly Executive Report</button>
-      <button type="button" class="tab-btn hidden" id="navAdminBtn" data-target="tabAdmin">4. Administrator <span id="navPendingBadge" class="badge-count hidden">0</span></button>
+      <button type="button" class="tab-btn" data-target="tabReport">3. Quarterly Report</button>
+      <button type="button" class="tab-btn" data-target="tabPdfAudit">4. PDF Ratification Audit</button>
+      <button type="button" class="tab-btn hidden" id="navAdminBtn" data-target="tabAdmin">5. Administrator <span id="navPendingBadge" class="badge-count hidden">0</span></button>
     </nav>
 
     <main>
       <div id="globalAlert" class="alert"></div>
+
+      <!-- GEMINI API CONFIGURATION BAR -->
+      <div class="ai-bar no-print">
+        <div class="ai-bar-inputs">
+          <span class="pill pill-blue">Gemini AI</span>
+          <input type="password" id="geminiApiKeyInput" placeholder="Paste Gemini API Key (stored locally in browser)" style="max-width:290px;" />
+          <select id="geminiModelSelect" style="max-width:210px;">
+            <option value="gemini-3.5-flash-lite" selected>gemini-3.5-flash-lite (Fast / Free Tier)</option>
+            <option value="gemini-3.8-flash">gemini-3.8-flash (High Accuracy)</option>
+          </select>
+          <button type="button" class="btn btn-outline btn-sm" id="btnSaveGeminiKey">Save Key</button>
+        </div>
+        <span id="geminiKeyStatus" style="font-size:0.78rem; color:var(--slate-600);">Key not set yet</span>
+      </div>
 
       <!-- TAB 1: FINDING INPUT -->
       <section id="tabInput" class="tab-panel active">
@@ -514,12 +554,11 @@
               </div>
             </div>
 
-            <!-- Multi-Select + Manual Work Units -->
             <div class="form-group">
               <label>Audited Work Unit(s) — Select one or more, or add manually <span class="req">*</span></label>
               <div class="multi-picker">
                 <div class="selected-chips" id="selectedUnitsChips">
-                  <span style="font-size:0.8rem; color:var(--slate-400);" id="noUnitsHint">No work units selected yet...</span>
+                  <span style="font-size:0.8rem; color:var(--slate-400);">No work units selected yet...</span>
                 </div>
                 <div class="picker-controls">
                   <input type="text" id="workUnitSearch" placeholder="Search 135+ branches/districts or type new work unit..." style="flex:1; min-width:220px;" />
@@ -530,11 +569,35 @@
             </div>
           </div>
 
-          <!-- Section B: Multiple Findings -->
+          <!-- Section B: Batch Import + Multiple Findings -->
           <div class="card">
             <div class="card-title">
-              <span>Section B: Audit Findings & Action Plan Commitments</span>
-              <button type="button" class="btn btn-outline btn-sm" id="btnAddFindingRow">+ Add Another Finding</button>
+              <span>Section B: Audit Findings, AI Risk Rating & Action Commitments</span>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button type="button" class="btn btn-outline btn-sm" id="btnToggleBatch">Batch Import (CSV / Paste)</button>
+                <button type="button" class="btn btn-outline btn-sm" id="btnScoreAllRisks">AI Score All Risks (Gemini)</button>
+                <button type="button" class="btn btn-outline btn-sm" id="btnAddFindingRow">+ Add Finding Row</button>
+              </div>
+            </div>
+
+            <!-- Batch Import Collapsible Panel -->
+            <div id="batchImportPanel" class="batch-panel hidden">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+                <strong style="color:var(--primary); font-size:0.9rem;">Batch Insert Findings (Paste Tab/CSV Rows or Upload .CSV)</strong>
+                <button type="button" class="btn btn-outline btn-sm" id="btnDownloadTemplate">Download Sample CSV</button>
+              </div>
+              <p style="font-size:0.8rem; color:var(--slate-700); margin-bottom:8px;">
+                Format per line: <code>Work Unit | Responsible Person | Target Date (YYYY-MM-DD) | Finding & Agreed Corrective Action</code> (works with <code>|</code>, tab-separated Excel copy/paste, or CSV).
+              </p>
+              <div class="grid-2" style="margin-bottom:10px;">
+                <textarea id="batchPasteText" placeholder="Adama Branch I | Branch Manager | 2026-12-31 | Delayed third-party recovery follow-up on 12 settled claims..."></textarea>
+                <div class="form-group">
+                  <label>Or Upload CSV File</label>
+                  <input type="file" id="batchCsvFile" accept=".csv,text/csv" />
+                  <small style="color:var(--slate-600); font-size:0.75rem;">Tip: Select at least one Work Unit in Section A as fallback if a row leaves Work Unit blank.</small>
+                </div>
+              </div>
+              <button type="button" class="btn btn-primary btn-sm" id="btnParseBatch">Load Rows into Findings Below</button>
             </div>
 
             <div id="findingsContainer"></div>
@@ -552,10 +615,9 @@
         <div class="card">
           <div class="card-title">
             <span>Action Plan & Ratification Progress Tracker</span>
-            <span style="font-size:0.8rem; font-weight:500; color:var(--slate-600);">Live Schedule Monitoring (System Date vs. Target Date / Actual Completion Date)</span>
+            <span style="font-size:0.8rem; font-weight:500; color:var(--slate-600);">Schedule Variance = System Date vs. Target Date (or Actual Completion Date once Action Taken)</span>
           </div>
 
-          <!-- Filters -->
           <div class="grid-4" style="margin-bottom:16px;">
             <div class="form-group">
               <label>Filter by Fiscal Year</label>
@@ -582,7 +644,7 @@
             </div>
             <div class="form-group">
               <label>Search Work Unit / Ref / Finding</label>
-              <input type="text" id="filterSearch" placeholder="Type branch, ref #, or keyword..." />
+              <input type="text" id="filterSearch" placeholder="Type branch, ref #, risk, or keyword..." />
             </div>
           </div>
 
@@ -592,17 +654,18 @@
                 <tr>
                   <th>Ref # & Quarter</th>
                   <th>Audited Work Unit</th>
+                  <th>Risk</th>
                   <th>Audit Finding & Project</th>
-                  <th>Responsible Person</th>
+                  <th>Responsible</th>
                   <th>Target Date</th>
-                  <th>Action Status</th>
-                  <th>Schedule Status & Variance</th>
+                  <th>Status</th>
+                  <th>Schedule Status</th>
                   <th>Last Updated By</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody id="progressTableBody">
-                <tr><td colspan="9" style="text-align:center; padding:20px; color:var(--slate-600);">Loading audit findings...</td></tr>
+                <tr><td colspan="10" style="text-align:center; padding:20px; color:var(--slate-600);">Loading audit findings...</td></tr>
               </tbody>
             </table>
           </div>
@@ -614,7 +677,10 @@
         <div class="card no-print">
           <div class="card-title">
             <span>Quarterly Report Filter & Export</span>
-            <button type="button" class="btn btn-primary btn-sm" onclick="window.print()">Print / Save Report as PDF</button>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button type="button" class="btn btn-success btn-sm" id="btnAiExecutiveNarrative">Generate AI Executive Summary</button>
+              <button type="button" class="btn btn-primary btn-sm" onclick="window.print()">Print / Save PDF</button>
+            </div>
           </div>
           <div class="grid-3">
             <div class="form-group">
@@ -638,22 +704,21 @@
           </div>
         </div>
 
-        <!-- KPI Summary Cards -->
         <div class="kpi-grid">
           <div class="kpi-card">
-            <div class="kpi-label">Total Findings Raised</div>
+            <div class="kpi-label">Total Findings</div>
             <div class="kpi-val" id="kpiTotal">0</div>
             <div class="kpi-sub" id="kpiEngagements">Across 0 engagements</div>
           </div>
           <div class="kpi-card" style="border-top:4px solid var(--success);">
-            <div class="kpi-label">Action Taken (Ratified)</div>
+            <div class="kpi-label">Action Taken</div>
             <div class="kpi-val" style="color:var(--success);" id="kpiTaken">0</div>
-            <div class="kpi-sub" id="kpiTakenPct">0% implementation rate</div>
+            <div class="kpi-sub" id="kpiTakenPct">0% completed</div>
           </div>
           <div class="kpi-card" style="border-top:4px solid var(--warning);">
             <div class="kpi-label">In Progress</div>
             <div class="kpi-val" style="color:var(--warning);" id="kpiProgress">0</div>
-            <div class="kpi-sub" id="kpiProgressPct">0% currently underway</div>
+            <div class="kpi-sub" id="kpiProgressPct">0% underway</div>
           </div>
           <div class="kpi-card" style="border-top:4px solid var(--danger);">
             <div class="kpi-label">No Action Taken</div>
@@ -661,13 +726,12 @@
             <div class="kpi-sub" id="kpiNotTakenPct">0% unaddressed</div>
           </div>
           <div class="kpi-card" style="border-top:4px solid #7f1d1d;">
-            <div class="kpi-label">Behind Schedule (Open)</div>
+            <div class="kpi-label">Behind Schedule</div>
             <div class="kpi-val" style="color:#7f1d1d;" id="kpiDelayed">0</div>
-            <div class="kpi-sub">Past target date & unresolved</div>
+            <div class="kpi-sub" id="kpiRiskBreakdown">H: 0 | M: 0 | L: 0</div>
           </div>
         </div>
 
-        <!-- Executive Narrative -->
         <div class="card">
           <div class="card-title">
             <span>Executive Summary Report Narrative</span>
@@ -676,7 +740,6 @@
           <div class="narrative-box" id="executiveNarrative"></div>
         </div>
 
-        <!-- Breakdown by Work Unit -->
         <div class="card">
           <div class="card-title"><span>Summary Breakdown by Audited Work Unit</span></div>
           <div class="table-wrap">
@@ -684,12 +747,13 @@
               <thead>
                 <tr>
                   <th>Audited Work Unit</th>
-                  <th>Total Findings</th>
+                  <th>Total</th>
                   <th>Action Taken</th>
                   <th>In Progress</th>
                   <th>No Action Taken</th>
-                  <th>Behind Schedule (Open)</th>
-                  <th>Completion Rate</th>
+                  <th>Behind Schedule</th>
+                  <th>Risk (H/M/L)</th>
+                  <th>Completion %</th>
                 </tr>
               </thead>
               <tbody id="reportUnitTableBody"></tbody>
@@ -698,7 +762,76 @@
         </div>
       </section>
 
-      <!-- TAB 4: ADMINISTRATOR TAB -->
+      <!-- TAB 4: PDF RATIFICATION COMPARISON -->
+      <section id="tabPdfAudit" class="tab-panel">
+        <div class="card">
+          <div class="card-title">
+            <span>Compare Original Audit Report PDF vs. Work Unit Ratification PDF</span>
+            <span style="font-size:0.78rem; color:var(--slate-600);">Processed in memory via Gemini — raw PDF files are NOT stored in Firestore</span>
+          </div>
+
+          <form id="pdfCompareForm">
+            <div class="grid-3" style="margin-bottom:14px;">
+              <div class="form-group">
+                <label>Work Unit Name <span class="req">*</span></label>
+                <input type="text" id="pdfWorkUnit" placeholder="e.g., Bahir Dar District or Bole Branch" required />
+              </div>
+              <div class="form-group">
+                <label>Audit Quarter / Reference</label>
+                <input type="text" id="pdfQuarterRef" placeholder="e.g., Q2 (Oct - Dec) • IA/2026/Q2/009" />
+              </div>
+              <div class="form-group">
+                <label>Max PDF Size Guard (per file)</label>
+                <input type="text" value="Up to 15 MB recommended (inline PDF)" disabled />
+              </div>
+            </div>
+
+            <div class="grid-2" style="margin-bottom:16px;">
+              <div class="form-group">
+                <label>1. Original Audit Finding Report (PDF) <span class="req">*</span></label>
+                <input type="file" id="originalPdfFile" accept="application/pdf,.pdf" required />
+              </div>
+              <div class="form-group">
+                <label>2. Work Unit Ratification Report (PDF) <span class="req">*</span></label>
+                <input type="file" id="ratificationPdfFile" accept="application/pdf,.pdf" required />
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="btnRunPdfComparison">Compare Reports & Generate Executive Summary</button>
+          </form>
+
+          <div id="pdfComparisonResultCard" class="hidden" style="margin-top:20px;">
+            <div class="card-title">
+              <span>Latest PDF Comparison Result</span>
+              <span id="pdfVerdictPill" class="pill pill-blue"></span>
+            </div>
+            <div class="narrative-box" id="pdfComparisonText"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><span>Saved Ratification Comparison Log (Text Summary Only)</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Work Unit & Ref</th>
+                  <th>Verdict</th>
+                  <th>Original vs. Ratification PDF</th>
+                  <th>Summary</th>
+                  <th>Reviewed By</th>
+                </tr>
+              </thead>
+              <tbody id="pdfHistoryBody">
+                <tr><td colspan="6" style="text-align:center; padding:16px; color:var(--slate-600);">No PDF comparisons logged yet.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: ADMINISTRATOR TAB -->
       <section id="tabAdmin" class="tab-panel">
         <div class="card">
           <div class="card-title">
@@ -725,9 +858,6 @@
 
         <div class="card">
           <div class="card-title"><span>Authorized Employee ID Whitelist (19 Pre-Approved IDs)</span></div>
-          <p style="font-size:0.86rem; color:var(--slate-700); margin-bottom:10px;">
-            Only users registering with one of the following IDs can submit a registration request. ID <strong>02249</strong> holds System Administrator privileges.
-          </p>
           <div id="whitelistBadges" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
         </div>
       </section>
@@ -745,24 +875,33 @@
 
       <form id="updateProgressForm">
         <input type="hidden" id="modalFindingId" />
-        <div class="form-group" style="margin-bottom:12px;">
-          <label>Current Action Status <span class="req">*</span></label>
-          <select id="modalStatus" required>
-            <option value="Not Taken">Not Taken</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Action Taken">Action Taken (Completed / Ratified)</option>
-          </select>
+        <div class="grid-2" style="margin-bottom:12px;">
+          <div class="form-group">
+            <label>Current Action Status <span class="req">*</span></label>
+            <select id="modalStatus" required>
+              <option value="Not Taken">Not Taken</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Action Taken">Action Taken (Completed / Ratified)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Risk Level</label>
+            <select id="modalRiskLevel">
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+            </select>
+          </div>
         </div>
 
         <div class="form-group hidden" id="modalCompletionDateGroup" style="margin-bottom:12px;">
           <label>Actual Action Completion Date <span class="req">*</span></label>
           <input type="date" id="modalCompletionDate" />
-          <small style="color:var(--slate-600); font-size:0.76rem;">Locks in whether action was completed on time or delayed relative to the target date.</small>
         </div>
 
         <div class="form-group" style="margin-bottom:14px;">
-          <label>Follow-Up Remark / Evidence Reference <span class="req">*</span></label>
-          <textarea id="modalRemark" placeholder="Describe management response, verification evidence, or reason for delay..." required></textarea>
+          <label>Follow-Up Remark / Verification Evidence <span class="req">*</span></label>
+          <textarea id="modalRemark" required></textarea>
         </div>
 
         <div style="display:flex; justify-content:flex-end; gap:8px;">
@@ -773,7 +912,6 @@
     </div>
   </div>
 
-  <!-- FIREBASE & APPLICATION LOGIC -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
     import {
@@ -799,7 +937,7 @@
     } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
     // =========================================================================
-    // 1. PASTE YOUR FIREBASE CONFIGURATION HERE
+    // 1. FIREBASE CONFIGURATION (REPLACE WITH YOUR PROJECT CONFIG)
     // =========================================================================
     const firebaseConfig = {
       apiKey: "AIzaSyDr8KZovD-lXBLreCkdtbBQD6Qq-IOs8ro",
@@ -815,7 +953,7 @@
     const db = getFirestore(app);
 
     // =========================================================================
-    // 2. MASTER CONSTANTS & LISTS
+    // 2. MASTER CONSTANTS
     // =========================================================================
     const ADMIN_ID = "02249";
     const ALLOWED_IDS = [
@@ -876,15 +1014,79 @@
       "Wolaita Sodo Branch", "Yabelo Satellite Branch", "Yerer Branch"
     ].sort();
 
-    // =========================================================================
-    // 3. APPLICATION STATE
-    // =========================================================================
     let currentUserProfile = null;
     let selectedWorkUnits = [];
     let allFindings = [];
     let allUsers = [];
+    let allPdfComparisons = [];
     let unsubFindings = null;
     let unsubUsers = null;
+    let unsubPdf = null;
+
+    // =========================================================================
+    // 3. GEMINI API HELPER
+    // =========================================================================
+    const GEMINI_KEY_STORAGE = "audit_gemini_api_key_v1";
+    const GEMINI_MODEL_STORAGE = "audit_gemini_model_v1";
+
+    function initGeminiKeyUI() {
+      const savedKey = localStorage.getItem(GEMINI_KEY_STORAGE) || "";
+      const savedModel = localStorage.getItem(GEMINI_MODEL_STORAGE) || "gemini-3.5-flash-lite";
+      document.getElementById("geminiApiKeyInput").value = savedKey;
+      document.getElementById("geminiModelSelect").value = savedModel;
+      updateKeyStatusLabel(Boolean(savedKey));
+    }
+
+    function updateKeyStatusLabel(hasKey) {
+      const el = document.getElementById("geminiKeyStatus");
+      el.textContent = hasKey ? "API key saved locally" : "Key not set yet";
+      el.style.color = hasKey ? "var(--success)" : "var(--slate-600)";
+    }
+
+    document.getElementById("btnSaveGeminiKey").addEventListener("click", () => {
+      const key = document.getElementById("geminiApiKeyInput").value.trim();
+      const model = document.getElementById("geminiModelSelect").value;
+      localStorage.setItem(GEMINI_KEY_STORAGE, key);
+      localStorage.setItem(GEMINI_MODEL_STORAGE, model);
+      updateKeyStatusLabel(Boolean(key));
+      showAlert("globalAlert", key ? "Gemini API settings saved." : "Gemini API key cleared.", "info");
+    });
+
+    document.getElementById("geminiModelSelect").addEventListener("change", (e) => {
+      localStorage.setItem(GEMINI_MODEL_STORAGE, e.target.value);
+    });
+
+    function getGeminiCredentials() {
+      const apiKey = document.getElementById("geminiApiKeyInput").value.trim() || localStorage.getItem(GEMINI_KEY_STORAGE) || "";
+      const model = document.getElementById("geminiModelSelect").value || localStorage.getItem(GEMINI_MODEL_STORAGE) || "gemini-3.5-flash-lite";
+      if (!apiKey) {
+        throw new Error("Please enter and save your Google Gemini API key in the Gemini AI bar above first.");
+      }
+      return { apiKey, model };
+    }
+
+    async function callGemini(parts, responseMimeType = null) {
+      const { apiKey, model } = getGeminiCredentials();
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`;
+      const body = { contents: [{ parts }] };
+      if (responseMimeType) {
+        body.generationConfig = { responseMimeType };
+      }
+
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`Gemini API request failed (${res.status}): ${errText}`);
+      }
+      const data = await res.json();
+      const text = data?.candidates?.[0]?.content?.parts?.map((p) => p.text || "").join("") || "";
+      if (!text) throw new Error("Gemini returned an empty response.");
+      return text;
+    }
 
     // =========================================================================
     // 4. DATE & SCHEDULE VARIANCE UTILITIES
@@ -897,7 +1099,6 @@
     }
 
     function diffDays(dateAStr, dateBStr) {
-      // Returns (dateA - dateB) in whole days
       const a = new Date(dateAStr + "T00:00:00");
       const b = new Date(dateBStr + "T00:00:00");
       return Math.round((a - b) / (1000 * 60 * 60 * 24));
@@ -911,47 +1112,38 @@
         const compDate = finding.completionDate || today;
         const variance = diffDays(compDate, target);
         if (variance <= 0) {
-          return {
-            label: `Completed On Time (${compDate})`,
-            badgeClass: "pill-green",
-            isDelayedOpen: false,
-            daysDelayed: 0
-          };
-        } else {
-          return {
-            label: `Completed ${variance} day(s) late (${compDate})`,
-            badgeClass: "pill-blue",
-            isDelayedOpen: false,
-            daysDelayed: variance
-          };
+          return { label: `Completed On Time (${compDate})`, badgeClass: "pill-green", isDelayedOpen: false };
         }
+        return { label: `Completed ${variance}d late (${compDate})`, badgeClass: "pill-blue", isDelayedOpen: false };
       }
 
-      // Status is Not Taken or In Progress -> compare System Date vs Target Date
       const variance = diffDays(today, target);
       if (variance <= 0) {
         const daysLeft = Math.abs(variance);
         return {
-          label: daysLeft === 0 ? "On Schedule (Due Today)" : `On Schedule (${daysLeft} day(s) left)`,
+          label: daysLeft === 0 ? "On Schedule (Due Today)" : `On Schedule (${daysLeft}d left)`,
           badgeClass: "pill-green",
-          isDelayedOpen: false,
-          daysDelayed: 0
-        };
-      } else {
-        return {
-          label: `Behind Schedule (${variance} day(s) delayed)`,
-          badgeClass: "pill-red",
-          isDelayedOpen: true,
-          daysDelayed: variance
+          isDelayedOpen: false
         };
       }
+      return {
+        label: `Behind Schedule (${variance}d delayed)`,
+        badgeClass: "pill-red",
+        isDelayedOpen: true
+      };
+    }
+
+    function riskPillClass(risk) {
+      if (risk === "High") return "pill-red";
+      if (risk === "Medium") return "pill-amber";
+      return "pill-blue";
     }
 
     function showAlert(elId, msg, type = "error") {
       const el = document.getElementById(elId);
       el.textContent = msg;
       el.className = `alert show alert-${type}`;
-      setTimeout(() => { el.classList.remove("show"); }, 6000);
+      setTimeout(() => { el.classList.remove("show"); }, 6500);
     }
 
     // =========================================================================
@@ -979,7 +1171,6 @@
       e.preventDefault();
       const empId = document.getElementById("loginId").value.trim();
       const pwd = document.getElementById("loginPassword").value;
-
       if (!ALLOWED_IDS.includes(empId)) {
         showAlert("authAlert", "Access Denied: Employee ID is not on the authorized department roster.", "error");
         return;
@@ -987,7 +1178,7 @@
       try {
         await signInWithEmailAndPassword(auth, idToEmail(empId), pwd);
       } catch (err) {
-        showAlert("authAlert", "Login failed: Invalid ID or password. If you haven't registered yet, use the Register tab.", "error");
+        showAlert("authAlert", "Login failed: Invalid ID or password.", "error");
       }
     });
 
@@ -1002,7 +1193,6 @@
         showAlert("authAlert", `ID "${empId}" is not in the pre-approved list of 19 department IDs.`, "error");
         return;
       }
-
       try {
         const cred = await createUserWithEmailAndPassword(auth, idToEmail(empId), pwd);
         const isInitialAdmin = empId === ADMIN_ID;
@@ -1026,6 +1216,7 @@
     const handleLogout = async () => {
       if (unsubFindings) unsubFindings();
       if (unsubUsers) unsubUsers();
+      if (unsubPdf) unsubPdf();
       await signOut(auth);
     };
     document.getElementById("btnLogout").addEventListener("click", handleLogout);
@@ -1041,22 +1232,17 @@
         document.getElementById("loginForm").classList.remove("hidden");
         return;
       }
-
       const userSnap = await getDoc(doc(db, "users", user.uid));
       if (!userSnap.exists()) {
         await signOut(auth);
         return;
       }
-
       currentUserProfile = userSnap.data();
-
-      // Auto-elevate ID 02249 if needed
       if (currentUserProfile.empId === ADMIN_ID && (!currentUserProfile.approved || currentUserProfile.role !== "admin")) {
         await updateDoc(doc(db, "users", user.uid), { approved: true, role: "admin" });
         currentUserProfile.approved = true;
         currentUserProfile.role = "admin";
       }
-
       if (!currentUserProfile.approved) {
         document.getElementById("authSection").classList.remove("hidden");
         document.getElementById("appSection").classList.add("hidden");
@@ -1067,24 +1253,18 @@
         return;
       }
 
-      // Approved User -> Enter Dashboard
       document.getElementById("authSection").classList.add("hidden");
       document.getElementById("appSection").classList.remove("hidden");
       document.getElementById("headerUserArea").classList.remove("hidden");
       document.getElementById("headerUserInfo").textContent =
         `${currentUserProfile.fullName} (${currentUserProfile.empId}) • ${currentUserProfile.role.toUpperCase()}`;
-
-      if (currentUserProfile.role === "admin") {
-        document.getElementById("navAdminBtn").classList.remove("hidden");
-      } else {
-        document.getElementById("navAdminBtn").classList.add("hidden");
-      }
+      document.getElementById("navAdminBtn").classList.toggle("hidden", currentUserProfile.role !== "admin");
 
       initRealtimeListeners();
     });
 
     // =========================================================================
-    // 6. TAB NAVIGATION
+    // 6. TABS & FORM INITIALIZATION
     // =========================================================================
     document.querySelectorAll(".tab-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -1095,11 +1275,9 @@
       });
     });
 
-    // =========================================================================
-    // 7. INITIALIZE DROPDOWNS, WORK UNIT MULTI-PICKER & FINDING ROWS
-    // =========================================================================
     function initFormControls() {
-      // Fiscal Years (2024/25 through 2030/31)
+      initGeminiKeyUI();
+
       const fySelects = ["auditYear", "filterYear", "repYear"];
       const years = ["2024/2025", "2025/2026", "2026/2027", "2027/2028", "2028/2029", "2029/2030"];
       fySelects.forEach((id) => {
@@ -1113,7 +1291,6 @@
         });
       });
 
-      // Default Quarter based on current month (Nov = Q2)
       const month = new Date().getMonth() + 1;
       const qSel = document.getElementById("auditQuarter");
       if (month >= 7 && month <= 9) qSel.value = "Q1 (Jul - Sep)";
@@ -1123,7 +1300,6 @@
 
       document.getElementById("reportIssueDate").value = getTodayISO();
 
-      // Project Dropdown + Custom Option
       const projSel = document.getElementById("projectSelect");
       DEFAULT_PROJECTS.forEach((p) => {
         const opt = document.createElement("option");
@@ -1138,16 +1314,11 @@
 
       projSel.addEventListener("change", () => {
         const customInput = document.getElementById("customProjectInput");
-        if (projSel.value === "__CUSTOM__") {
-          customInput.classList.remove("hidden");
-          customInput.required = true;
-        } else {
-          customInput.classList.add("hidden");
-          customInput.required = false;
-        }
+        const isCustom = projSel.value === "__CUSTOM__";
+        customInput.classList.toggle("hidden", !isCustom);
+        customInput.required = isCustom;
       });
 
-      // Whitelist badges in Admin tab
       const wlContainer = document.getElementById("whitelistBadges");
       ALLOWED_IDS.forEach((id) => {
         const span = document.createElement("span");
@@ -1170,7 +1341,7 @@
       );
       unitDropdown.innerHTML = "";
       if (matches.length === 0) {
-        unitDropdown.innerHTML = `<div class="picker-item" style="color:var(--slate-600);">No matching predefined unit. Click "+ Add Manual Unit" to add "${filterText}".</div>`;
+        unitDropdown.innerHTML = `<div class="picker-item" style="color:var(--slate-600);">No matching unit. Click "+ Add Manual Unit" to add "${filterText}".</div>`;
       } else {
         matches.forEach((unit) => {
           const div = document.createElement("div");
@@ -1229,16 +1400,15 @@
     });
     document.getElementById("btnAddCustomUnit").addEventListener("click", () => {
       const val = unitSearchInput.value.trim();
-      if (!val) {
-        alert("Type the name of the work unit in the box first, then click '+ Add Manual Unit'.");
-        return;
-      }
+      if (!val) return;
       addWorkUnit(val);
       unitSearchInput.value = "";
       unitDropdown.classList.remove("open");
     });
 
-    // Dynamic Finding Rows
+    // =========================================================================
+    // 7. FINDING ROWS, AI RISK SCORING & BATCH IMPORT
+    // =========================================================================
     function refreshFindingRowUnitSelectors() {
       document.querySelectorAll(".finding-unit-select").forEach((sel) => {
         const prev = sel.value;
@@ -1257,43 +1427,124 @@
       });
     }
 
-    function addFindingRow() {
+    async function scoreSingleFindingRisk(box) {
+      const desc = box.querySelector(".finding-desc").value.trim();
+      const unit = box.querySelector(".finding-unit-select").value || "Audited Work Unit";
+      const proj = document.getElementById("projectSelect").value === "__CUSTOM__"
+        ? document.getElementById("customProjectInput").value.trim()
+        : document.getElementById("projectSelect").value;
+
+      if (!desc) {
+        showAlert("globalAlert", "Enter the audit finding description before requesting AI risk scoring.", "error");
+        return;
+      }
+
+      const btn = box.querySelector(".btn-score-risk");
+      const reasonEl = box.querySelector(".finding-risk-reason");
+      const riskSelect = box.querySelector(".finding-risk-level");
+
+      btn.disabled = true;
+      btn.textContent = "Scoring...";
+      try {
+        const prompt = [
+          "You are an internal audit risk assessor.",
+          "Classify the following audit finding into one risk level: High, Medium, or Low.",
+          "- High: major financial loss/exposure, severe control failure, fraud/compliance breach, or critical operational disruption.",
+          "- Medium: moderate control weakness, recurring process error, or delayed recovery/reconciliation.",
+          "- Low: minor documentation gap, low-value discrepancy, or routine procedural improvement.",
+          `Audit Project: ${proj}`,
+          `Work Unit: ${unit}`,
+          `Finding: ${desc}`,
+          'Respond ONLY with valid JSON: {"riskLevel":"High|Medium|Low","rationale":"one concise sentence"}'
+        ].join("\n");
+
+        const raw = await callGemini([{ text: prompt }], "application/json");
+        const parsed = JSON.parse(raw);
+        if (["High", "Medium", "Low"].includes(parsed.riskLevel)) {
+          riskSelect.value = parsed.riskLevel;
+        }
+        reasonEl.textContent = parsed.rationale ? `AI Rationale: ${parsed.rationale}` : "";
+      } catch (err) {
+        showAlert("globalAlert", "AI Risk Scoring failed: " + err.message, "error");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "AI Score Risk";
+      }
+    }
+
+    function addFindingRow(prefill = null, clearEmptyFirstRow = false) {
       const container = document.getElementById("findingsContainer");
+      if (clearEmptyFirstRow && container.children.length === 1) {
+        const firstDesc = container.children[0].querySelector(".finding-desc").value.trim();
+        const firstResp = container.children[0].querySelector(".finding-responsible").value.trim();
+        if (!firstDesc && !firstResp) container.innerHTML = "";
+      }
+
       const index = container.children.length + 1;
       const box = document.createElement("div");
       box.className = "finding-box";
       box.innerHTML = `
         <div class="finding-box-header">
           <span>Finding #${index}</span>
-          ${index > 1 ? `<button type="button" class="btn btn-danger btn-sm btn-remove-finding">Remove</button>` : ""}
+          <div style="display:flex; gap:6px; align-items:center;">
+            <button type="button" class="btn btn-outline btn-sm btn-score-risk">AI Score Risk</button>
+            ${index > 1 || container.children.length > 0 ? `<button type="button" class="btn btn-danger btn-sm btn-remove-finding">Remove</button>` : ""}
+          </div>
         </div>
-        <div class="grid-3" style="margin-bottom:10px;">
+        <div class="grid-4" style="margin-bottom:10px;">
           <div class="form-group">
-            <label>Specific Work Unit for This Finding <span class="req">*</span></label>
+            <label>Specific Work Unit <span class="req">*</span></label>
             <select class="finding-unit-select" required></select>
           </div>
           <div class="form-group">
-            <label>Responsible Person / Official <span class="req">*</span></label>
-            <input type="text" class="finding-responsible" placeholder="Name or Title of Action Owner" required />
+            <label>Risk Level <span class="req">*</span></label>
+            <select class="finding-risk-level" required>
+              <option value="High">High</option>
+              <option value="Medium" selected>Medium</option>
+              <option value="Low">Low</option>
+            </select>
           </div>
           <div class="form-group">
-            <label>Corrective Action Target Date <span class="req">*</span></label>
+            <label>Responsible Person <span class="req">*</span></label>
+            <input type="text" class="finding-responsible" placeholder="Action owner name/title" required />
+          </div>
+          <div class="form-group">
+            <label>Target Date <span class="req">*</span></label>
             <input type="date" class="finding-target-date" required />
           </div>
         </div>
         <div class="form-group">
           <label>Audit Finding Description & Agreed Corrective Action <span class="req">*</span></label>
-          <textarea class="finding-desc" placeholder="Summarize the audit observation and the corrective action agreed by the work unit..." required></textarea>
+          <textarea class="finding-desc" placeholder="Describe the finding and agreed corrective action..." required></textarea>
+          <small class="finding-risk-reason" style="color:var(--info); font-size:0.77rem;"></small>
         </div>
       `;
-      if (index > 1) {
-        box.querySelector(".btn-remove-finding").addEventListener("click", () => {
+
+      box.querySelector(".btn-score-risk").addEventListener("click", () => scoreSingleFindingRisk(box));
+      const remBtn = box.querySelector(".btn-remove-finding");
+      if (remBtn) {
+        remBtn.addEventListener("click", () => {
           box.remove();
           renumberFindingRows();
         });
       }
+
       container.appendChild(box);
       refreshFindingRowUnitSelectors();
+
+      if (prefill) {
+        if (prefill.workUnit) {
+          addWorkUnit(prefill.workUnit);
+          refreshFindingRowUnitSelectors();
+          box.querySelector(".finding-unit-select").value = prefill.workUnit;
+        }
+        if (prefill.riskLevel && ["High", "Medium", "Low"].includes(prefill.riskLevel)) {
+          box.querySelector(".finding-risk-level").value = prefill.riskLevel;
+        }
+        if (prefill.responsiblePerson) box.querySelector(".finding-responsible").value = prefill.responsiblePerson;
+        if (prefill.targetDate) box.querySelector(".finding-target-date").value = prefill.targetDate;
+        if (prefill.findingText) box.querySelector(".finding-desc").value = prefill.findingText;
+      }
     }
 
     function renumberFindingRows() {
@@ -1302,7 +1553,97 @@
       });
     }
 
-    document.getElementById("btnAddFindingRow").addEventListener("click", addFindingRow);
+    document.getElementById("btnAddFindingRow").addEventListener("click", () => addFindingRow());
+
+    document.getElementById("btnScoreAllRisks").addEventListener("click", async () => {
+      const boxes = [...document.querySelectorAll("#findingsContainer .finding-box")];
+      for (const box of boxes) {
+        if (box.querySelector(".finding-desc").value.trim()) {
+          await scoreSingleFindingRisk(box);
+        }
+      }
+    });
+
+    // Batch Import Controls
+    document.getElementById("btnToggleBatch").addEventListener("click", () => {
+      document.getElementById("batchImportPanel").classList.toggle("hidden");
+    });
+
+    document.getElementById("btnDownloadTemplate").addEventListener("click", () => {
+      const csv = [
+        "Work Unit,Responsible Person,Target Date,Finding Description",
+        'Adama Branch I,Branch Manager,2026-12-31,"Unreconciled suspense balance pending follow-up"',
+        'Hawassa District,District Risk Officer,2027-01-15,"Third-party recovery letters delayed beyond 30 days"'
+      ].join("\n");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "audit_findings_batch_template.csv";
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    document.getElementById("batchCsvFile").addEventListener("change", (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        document.getElementById("batchPasteText").value = String(reader.result || "");
+      };
+      reader.readAsText(file);
+    });
+
+    function splitDelimitedLine(line) {
+      if (line.includes("\t")) return line.split("\t").map((s) => s.trim());
+      if (line.includes("|")) return line.split("|").map((s) => s.trim());
+      // Basic CSV quote-aware split
+      const out = [];
+      let cur = "";
+      let inQuotes = false;
+      for (let i = 0; i < line.length; i++) {
+        const ch = line[i];
+        if (ch === '"') { inQuotes = !inQuotes; continue; }
+        if (ch === "," && !inQuotes) { out.push(cur.trim()); cur = ""; continue; }
+        cur += ch;
+      }
+      out.push(cur.trim());
+      return out;
+    }
+
+    document.getElementById("btnParseBatch").addEventListener("click", () => {
+      const raw = document.getElementById("batchPasteText").value.trim();
+      if (!raw) {
+        showAlert("globalAlert", "Paste batch rows or select a CSV file first.", "error");
+        return;
+      }
+
+      const lines = raw.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+      let importedCount = 0;
+
+      lines.forEach((line, idx) => {
+        const cols = splitDelimitedLine(line);
+        // Skip header row if detected
+        if (idx === 0 && cols[0]?.toLowerCase().includes("work unit")) return;
+        if (cols.length < 2) return;
+
+        const workUnit = cols[0] || selectedWorkUnits[0] || "";
+        const responsiblePerson = cols[1] || "";
+        const targetDate = /^\d{4}-\d{2}-\d{2}$/.test(cols[2] || "") ? cols[2] : "";
+        const findingText = cols.slice(targetDate ? 3 : 2).join(" | ").trim();
+
+        if (!findingText && !responsiblePerson) return;
+        addFindingRow({ workUnit, responsiblePerson, targetDate, findingText }, importedCount === 0);
+        importedCount++;
+      });
+
+      if (importedCount === 0) {
+        showAlert("globalAlert", "Could not parse any valid finding rows. Check column order and try again.", "error");
+      } else {
+        showAlert("globalAlert", `Loaded ${importedCount} finding row(s) from batch input. Review and click "Save Engagement & Findings".`, "success");
+        document.getElementById("batchImportPanel").classList.add("hidden");
+      }
+    });
 
     function resetEngagementForm() {
       document.getElementById("engagementForm").reset();
@@ -1315,11 +1656,11 @@
     }
     document.getElementById("btnResetForm").addEventListener("click", resetEngagementForm);
 
-    // Save Engagement & Batch Findings to Firestore
+    // Save to Firestore
     document.getElementById("engagementForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       if (selectedWorkUnits.length === 0) {
-        showAlert("globalAlert", "Please select or add at least one Audited Work Unit in Section A.", "error");
+        showAlert("globalAlert", "Select or add at least one Audited Work Unit in Section A.", "error");
         return;
       }
 
@@ -1338,9 +1679,11 @@
       try {
         for (const box of findingBoxes) {
           const workUnit = box.querySelector(".finding-unit-select").value;
+          const riskLevel = box.querySelector(".finding-risk-level").value;
           const responsiblePerson = box.querySelector(".finding-responsible").value.trim();
           const targetDate = box.querySelector(".finding-target-date").value;
           const findingText = box.querySelector(".finding-desc").value.trim();
+          const riskRationale = box.querySelector(".finding-risk-reason").textContent.replace(/^AI Rationale:\s*/i, "");
 
           await addDoc(collection(db, "findings"), {
             auditYear,
@@ -1351,6 +1694,8 @@
             periodTo,
             projectName,
             workUnit,
+            riskLevel,
+            riskRationale,
             responsiblePerson,
             targetDate,
             findingText,
@@ -1364,7 +1709,7 @@
           });
         }
 
-        showAlert("globalAlert", `Successfully saved ${findingBoxes.length} finding(s) under Engagement ${engagementRef}!`, "success");
+        showAlert("globalAlert", `Saved ${findingBoxes.length} finding(s) under ${engagementRef}!`, "success");
         resetEngagementForm();
       } catch (err) {
         showAlert("globalAlert", "Error saving findings: " + err.message, "error");
@@ -1372,10 +1717,9 @@
     });
 
     // =========================================================================
-    // 8. REAL-TIME FIRESTORE LISTENERS
+    // 8. REAL-TIME LISTENERS & PROGRESS TRACKER
     // =========================================================================
     function initRealtimeListeners() {
-      // Listen to Findings
       const qFindings = query(collection(db, "findings"), orderBy("createdAt", "desc"));
       unsubFindings = onSnapshot(qFindings, (snap) => {
         allFindings = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
@@ -1384,7 +1728,12 @@
         renderReportTab();
       });
 
-      // Listen to Users (for Admin tab)
+      const qPdf = query(collection(db, "pdfComparisons"), orderBy("createdAt", "desc"));
+      unsubPdf = onSnapshot(qPdf, (snap) => {
+        allPdfComparisons = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+        renderPdfHistory();
+      });
+
       if (currentUserProfile.role === "admin") {
         unsubUsers = onSnapshot(collection(db, "users"), (snap) => {
           allUsers = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
@@ -1393,9 +1742,6 @@
       }
     }
 
-    // =========================================================================
-    // 9. ACTION PROGRESS TABLE & UPDATE MODAL
-    // =========================================================================
     ["filterYear", "filterQuarter", "filterStatus", "filterSearch"].forEach((id) => {
       document.getElementById(id).addEventListener("input", renderProgressTable);
       document.getElementById(id).addEventListener("change", renderProgressTable);
@@ -1420,7 +1766,7 @@
         if (fQuarter !== "ALL" && f.auditQuarter !== fQuarter) return false;
         if (fStatus !== "ALL" && f.status !== fStatus) return false;
         if (fSearch) {
-          const hay = `${f.workUnit} ${f.engagementRef} ${f.findingText} ${f.responsiblePerson} ${f.projectName}`.toLowerCase();
+          const hay = `${f.workUnit} ${f.engagementRef} ${f.findingText} ${f.responsiblePerson} ${f.projectName} ${f.riskLevel || ""}`.toLowerCase();
           if (!hay.includes(fSearch)) return false;
         }
         return true;
@@ -1428,13 +1774,14 @@
 
       const tbody = document.getElementById("progressTableBody");
       if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; padding:20px; color:var(--slate-600);">No audit findings match the selected filters.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding:20px; color:var(--slate-600);">No audit findings match the selected filters.</td></tr>`;
         return;
       }
 
       tbody.innerHTML = "";
       filtered.forEach((f) => {
         const sched = evaluateSchedule(f);
+        const risk = f.riskLevel || "Medium";
         let statusPill = "pill-red";
         if (f.status === "Action Taken") statusPill = "pill-green";
         else if (f.status === "In Progress") statusPill = "pill-amber";
@@ -1443,19 +1790,20 @@
         tr.innerHTML = `
           <td>
             <strong>${f.engagementRef}</strong><br/>
-            <span style="font-size:0.76rem; color:var(--slate-600);">${f.auditYear} • ${f.auditQuarter}</span>
+            <span style="font-size:0.75rem; color:var(--slate-600);">${f.auditYear} • ${f.auditQuarter}</span>
           </td>
           <td><strong>${f.workUnit}</strong></td>
-          <td style="max-width:300px;">
-            <div style="font-size:0.75rem; font-weight:700; color:var(--primary);">${f.projectName}</div>
+          <td><span class="pill ${riskPillClass(risk)}">${risk}</span></td>
+          <td style="max-width:290px;">
+            <div style="font-size:0.74rem; font-weight:700; color:var(--primary);">${f.projectName}</div>
             <div>${f.findingText}</div>
-            ${f.remark ? `<div style="font-size:0.77rem; color:var(--slate-600); margin-top:4px;"><em>Note: ${f.remark}</em></div>` : ""}
+            ${f.remark ? `<div style="font-size:0.76rem; color:var(--slate-600); margin-top:4px;"><em>Note: ${f.remark}</em></div>` : ""}
           </td>
           <td>${f.responsiblePerson}</td>
           <td style="white-space:nowrap;">${f.targetDate}</td>
           <td><span class="pill ${statusPill}">${f.status}</span></td>
           <td><span class="pill ${sched.badgeClass}">${sched.label}</span></td>
-          <td style="font-size:0.77rem; color:var(--slate-700);">
+          <td style="font-size:0.76rem; color:var(--slate-700);">
             <strong>${f.updatedBy || f.createdBy}</strong><br/>
             <span style="color:var(--slate-500);">${f.updatedAtStr || ""}</span>
           </td>
@@ -1474,8 +1822,8 @@
         <strong>Work Unit:</strong> ${finding.workUnit} &nbsp;|&nbsp; <strong>Target Date:</strong> ${finding.targetDate}<br/>
         <strong>Finding:</strong> ${finding.findingText}
       `;
-      const statusSel = document.getElementById("modalStatus");
-      statusSel.value = finding.status;
+      document.getElementById("modalStatus").value = finding.status;
+      document.getElementById("modalRiskLevel").value = finding.riskLevel || "Medium";
       document.getElementById("modalCompletionDate").value = finding.completionDate || getTodayISO();
       document.getElementById("modalRemark").value = finding.remark || "";
       toggleCompletionDateField();
@@ -1484,10 +1832,8 @@
 
     function toggleCompletionDateField() {
       const isTaken = document.getElementById("modalStatus").value === "Action Taken";
-      const grp = document.getElementById("modalCompletionDateGroup");
-      const inp = document.getElementById("modalCompletionDate");
-      grp.classList.toggle("hidden", !isTaken);
-      inp.required = isTaken;
+      document.getElementById("modalCompletionDateGroup").classList.toggle("hidden", !isTaken);
+      document.getElementById("modalCompletionDate").required = isTaken;
     }
 
     document.getElementById("modalStatus").addEventListener("change", toggleCompletionDateField);
@@ -1498,26 +1844,28 @@
       e.preventDefault();
       const id = document.getElementById("modalFindingId").value;
       const status = document.getElementById("modalStatus").value;
+      const riskLevel = document.getElementById("modalRiskLevel").value;
       const completionDate = status === "Action Taken" ? document.getElementById("modalCompletionDate").value : "";
       const remark = document.getElementById("modalRemark").value.trim();
 
       try {
         await updateDoc(doc(db, "findings", id), {
           status,
+          riskLevel,
           completionDate,
           remark,
           updatedBy: `${currentUserProfile.fullName} (${currentUserProfile.empId})`,
           updatedAtStr: new Date().toLocaleString()
         });
         document.getElementById("progressModal").classList.remove("open");
-        showAlert("globalAlert", "Action progress updated and auditor attribution recorded.", "success");
+        showAlert("globalAlert", "Action progress updated with auditor attribution.", "success");
       } catch (err) {
         alert("Failed to update status: " + err.message);
       }
     });
 
     // =========================================================================
-    // 10. QUARTERLY EXECUTIVE REPORT TAB
+    // 9. QUARTERLY REPORT & AI EXECUTIVE NARRATIVE
     // =========================================================================
     ["repYear", "repQuarter", "repUnit"].forEach((id) => {
       document.getElementById(id).addEventListener("change", renderReportTab);
@@ -1537,70 +1885,75 @@
       if (units.includes(current)) sel.value = current;
     }
 
-    function renderReportTab() {
+    function getFilteredReportFindings() {
       const rYear = document.getElementById("repYear").value;
       const rQuarter = document.getElementById("repQuarter").value;
       const rUnit = document.getElementById("repUnit").value;
-
-      const subset = allFindings.filter((f) => {
+      return allFindings.filter((f) => {
         if (rYear !== "ALL" && f.auditYear !== rYear) return false;
         if (rQuarter !== "ALL" && f.auditQuarter !== rQuarter) return false;
         if (rUnit !== "ALL" && f.workUnit !== rUnit) return false;
         return true;
       });
+    }
 
+    function renderReportTab() {
+      const subset = getFilteredReportFindings();
       const total = subset.length;
       const taken = subset.filter((f) => f.status === "Action Taken").length;
       const inProg = subset.filter((f) => f.status === "In Progress").length;
       const notTaken = subset.filter((f) => f.status === "Not Taken").length;
       const delayedOpen = subset.filter((f) => evaluateSchedule(f).isDelayedOpen).length;
+      const highRisk = subset.filter((f) => (f.riskLevel || "Medium") === "High").length;
+      const medRisk = subset.filter((f) => (f.riskLevel || "Medium") === "Medium").length;
+      const lowRisk = subset.filter((f) => (f.riskLevel || "Medium") === "Low").length;
       const engagements = new Set(subset.map((f) => f.engagementRef)).size;
-
       const pct = (n) => (total === 0 ? "0.0%" : ((n / total) * 100).toFixed(1) + "%");
 
       document.getElementById("kpiTotal").textContent = total;
       document.getElementById("kpiEngagements").textContent = `Across ${engagements} engagement(s)`;
       document.getElementById("kpiTaken").textContent = taken;
-      document.getElementById("kpiTakenPct").textContent = `${pct(taken)} implementation rate`;
+      document.getElementById("kpiTakenPct").textContent = `${pct(taken)} completed`;
       document.getElementById("kpiProgress").textContent = inProg;
       document.getElementById("kpiProgressPct").textContent = `${pct(inProg)} underway`;
       document.getElementById("kpiNotTaken").textContent = notTaken;
       document.getElementById("kpiNotTakenPct").textContent = `${pct(notTaken)} unaddressed`;
       document.getElementById("kpiDelayed").textContent = delayedOpen;
-      document.getElementById("reportGeneratedDate").textContent = `Generated on: ${new Date().toLocaleDateString()}`;
+      document.getElementById("kpiRiskBreakdown").textContent = `Risk: H ${highRisk} | M ${medRisk} | L ${lowRisk}`;
+      document.getElementById("reportGeneratedDate").textContent = `Generated: ${new Date().toLocaleDateString()}`;
 
-      // Executive Summary Narrative
-      const periodLabel = `${rYear === "ALL" ? "all recorded fiscal years" : "Fiscal Year " + rYear}, ${rQuarter === "ALL" ? "all quarters" : rQuarter}`;
-      const scopeLabel = rUnit === "ALL" ? `across ${new Set(subset.map((f) => f.workUnit)).size} audited work unit(s)` : `specifically for ${rUnit}`;
+      const rYear = document.getElementById("repYear").value;
+      const rQuarter = document.getElementById("repQuarter").value;
+      const rUnit = document.getElementById("repUnit").value;
+      const periodLabel = `${rYear === "ALL" ? "all recorded fiscal years" : "FY " + rYear}, ${rQuarter === "ALL" ? "all quarters" : rQuarter}`;
+      const scopeLabel = rUnit === "ALL" ? `across ${new Set(subset.map((f) => f.workUnit)).size} work unit(s)` : `for ${rUnit}`;
 
       const narrativeEl = document.getElementById("executiveNarrative");
       if (total === 0) {
-        narrativeEl.innerHTML = `<p>No internal audit findings have been recorded for the selected reporting criteria (${periodLabel}).</p>`;
+        narrativeEl.innerHTML = `<p>No findings recorded for ${periodLabel} (${scopeLabel}).</p>`;
       } else {
-        narrativeEl.innerHTML = `
-          <p><strong>1. Scope & Overview:</strong> During ${periodLabel}, the Internal Audit Department tracked a total of <strong>${total} audit finding(s)</strong> resulting from <strong>${engagements} audit engagement(s)</strong> ${scopeLabel}.</p>
-          <p><strong>2. Ratification & Corrective Action Status:</strong> Out of the ${total} findings raised, work units have fully implemented and ratified corrective actions for <strong>${taken} finding(s) (${pct(taken)})</strong>. Implementation is currently <strong>In Progress for ${inProg} finding(s) (${pct(inProg)})</strong>, while <strong>${notTaken} finding(s) (${pct(notTaken)})</strong> remain unaddressed with <strong>No Action Taken</strong>.</p>
-          <p><strong>3. Schedule Compliance & Overdue Exposure:</strong> Based on agreed corrective action target dates as of ${getTodayISO()}, <strong>${delayedOpen} open finding(s)</strong> have passed their target completion deadlines and are classified as <strong>Behind Schedule</strong>. Management attention and immediate follow-up are recommended for all behind-schedule items to mitigate unresolved control risks.</p>
-        `;
+        narrativeEl.innerHTML = `<p><strong>1. Overview:</strong> During ${periodLabel}, Internal Audit tracked <strong>${total} finding(s)</strong> across <strong>${engagements} engagement(s)</strong> ${scopeLabel} (Risk profile: <strong>${highRisk} High</strong>, <strong>${medRisk} Medium</strong>, <strong>${lowRisk} Low</strong>).</p><p><strong>2. Corrective Action & Ratification:</strong> <strong>${taken} (${pct(taken)})</strong> have <strong>Action Taken</strong>, <strong>${inProg} (${pct(inProg)})</strong> are <strong>In Progress</strong>, and <strong>${notTaken} (${pct(notTaken)})</strong> have <strong>No Action Taken</strong>.</p><p><strong>3. Schedule Status:</strong> As of ${getTodayISO()}, <strong>${delayedOpen} open finding(s)</strong> are <strong>Behind Schedule</strong> past their target dates and require priority follow-up.</p>`;
       }
 
-      // Breakdown Table by Work Unit
       const byUnit = {};
       subset.forEach((f) => {
         if (!byUnit[f.workUnit]) {
-          byUnit[f.workUnit] = { total: 0, taken: 0, inProg: 0, notTaken: 0, delayed: 0 };
+          byUnit[f.workUnit] = { total: 0, taken: 0, inProg: 0, notTaken: 0, delayed: 0, h: 0, m: 0, l: 0 };
         }
-        byUnit[f.workUnit].total++;
-        if (f.status === "Action Taken") byUnit[f.workUnit].taken++;
-        else if (f.status === "In Progress") byUnit[f.workUnit].inProg++;
-        else byUnit[f.workUnit].notTaken++;
-        if (evaluateSchedule(f).isDelayedOpen) byUnit[f.workUnit].delayed++;
+        const r = byUnit[f.workUnit];
+        r.total++;
+        if (f.status === "Action Taken") r.taken++;
+        else if (f.status === "In Progress") r.inProg++;
+        else r.notTaken++;
+        if (evaluateSchedule(f).isDelayedOpen) r.delayed++;
+        const rk = f.riskLevel || "Medium";
+        if (rk === "High") r.h++; else if (rk === "Low") r.l++; else r.m++;
       });
 
       const tbody = document.getElementById("reportUnitTableBody");
       const unitNames = Object.keys(byUnit).sort();
       if (unitNames.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:16px; color:var(--slate-600);">No data available for this selection.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:16px; color:var(--slate-600);">No data for selected filters.</td></tr>`;
         return;
       }
 
@@ -1616,7 +1969,158 @@
           <td><span class="pill pill-amber">${row.inProg}</span></td>
           <td><span class="pill pill-red">${row.notTaken}</span></td>
           <td>${row.delayed > 0 ? `<strong style="color:var(--danger);">${row.delayed}</strong>` : "0"}</td>
+          <td style="font-size:0.78rem;">H:${row.h} / M:${row.m} / L:${row.l}</td>
           <td><strong>${rate}</strong></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.getElementById("btnAiExecutiveNarrative").addEventListener("click", async () => {
+      const subset = getFilteredReportFindings();
+      if (subset.length === 0) {
+        showAlert("globalAlert", "No findings in the current report filter to summarize with AI.", "error");
+        return;
+      }
+
+      const btn = document.getElementById("btnAiExecutiveNarrative");
+      btn.disabled = true;
+      btn.textContent = "Generating AI Summary...";
+
+      try {
+        const compactRows = subset.slice(0, 60).map((f) => ({
+          unit: f.workUnit,
+          quarter: f.auditQuarter,
+          risk: f.riskLevel || "Medium",
+          status: f.status,
+          schedule: evaluateSchedule(f).label,
+          finding: f.findingText.slice(0, 180)
+        }));
+
+        const prompt = [
+          "Write a concise, formal executive audit summary for senior management based strictly on these statistics and finding records.",
+          "Do not invent numbers; preserve exact counts.",
+          "Include sections: Executive Overview, Ratification & Action Progress, High-Risk & Overdue Priorities, and Recommended Management Actions.",
+          JSON.stringify(compactRows)
+        ].join("\n\n");
+
+        const aiText = await callGemini([{ text: prompt }]);
+        document.getElementById("executiveNarrative").textContent = aiText;
+        showAlert("globalAlert", "Executive narrative generated with Google Gemini.", "success");
+      } catch (err) {
+        showAlert("globalAlert", "AI Executive Summary error: " + err.message, "error");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Generate AI Executive Summary";
+      }
+    });
+
+    // =========================================================================
+    // 10. PDF COMPARISON (ORIGINAL REPORT VS RATIFICATION REPORT)
+    // =========================================================================
+    const MAX_PDF_BYTES = 15 * 1024 * 1024;
+
+    function readFileAsBase64(file) {
+      return new Promise((resolve, reject) => {
+        if (!file) return reject(new Error("Missing PDF file."));
+        if (file.size > MAX_PDF_BYTES) {
+          return reject(new Error(`"${file.name}" exceeds 15 MB. Please compress or split the PDF first.`));
+        }
+        const reader = new FileReader();
+        reader.onload = () => {
+          const result = String(reader.result || "");
+          const base64 = result.includes(",") ? result.split(",")[1] : result;
+          resolve(base64);
+        };
+        reader.onerror = () => reject(new Error(`Failed reading "${file.name}".`));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    document.getElementById("pdfCompareForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const workUnit = document.getElementById("pdfWorkUnit").value.trim();
+      const quarterRef = document.getElementById("pdfQuarterRef").value.trim() || "Unspecified Quarter";
+      const origFile = document.getElementById("originalPdfFile").files?.[0];
+      const ratFile = document.getElementById("ratificationPdfFile").files?.[0];
+
+      const btn = document.getElementById("btnRunPdfComparison");
+      btn.disabled = true;
+      btn.textContent = "Analyzing Both PDFs with Gemini...";
+
+      try {
+        const [origBase64, ratBase64] = await Promise.all([
+          readFileAsBase64(origFile),
+          readFileAsBase64(ratFile)
+        ]);
+
+        const prompt = [
+          "You are a Senior Internal Auditor reviewing ratification compliance.",
+          `Work Unit: ${workUnit} | Quarter/Ref: ${quarterRef}`,
+          "Document 1 is the ORIGINAL AUDIT FINDING REPORT initially issued by the audit office.",
+          "Document 2 is the RATIFICATION REPORT received from the audited work unit.",
+          "Compare Document 1 against Document 2 and return valid JSON with this exact structure:",
+          '{"verdict":"Fully Ratified | Partially Ratified | Not Ratified","executiveSummary":"detailed executive summary of whether original findings were properly ratified, what evidence or actions were provided, and any gaps/unaddressed findings","findingByFindingNotes":"bulleted summary of each finding from the original report vs ratification response"}'
+        ].join("\n");
+
+        const rawJson = await callGemini([
+          { inlineData: { mimeType: "application/pdf", data: origBase64 } },
+          { inlineData: { mimeType: "application/pdf", data: ratBase64 } },
+          { text: prompt }
+        ], "application/json");
+
+        const parsed = JSON.parse(rawJson);
+        const verdict = parsed.verdict || "Partially Ratified";
+        const combinedSummary = `${parsed.executiveSummary || ""}\n\nFinding-by-Finding Assessment:\n${parsed.findingByFindingNotes || ""}`.trim();
+
+        // Display result
+        document.getElementById("pdfComparisonResultCard").classList.remove("hidden");
+        const pill = document.getElementById("pdfVerdictPill");
+        pill.textContent = verdict;
+        pill.className = `pill ${verdict.toLowerCase().includes("fully") ? "pill-green" : verdict.toLowerCase().includes("not") ? "pill-red" : "pill-amber"}`;
+        document.getElementById("pdfComparisonText").textContent = combinedSummary;
+
+        // Save ONLY compact summary/metadata to Firestore (no PDF base64 stored)
+        await addDoc(collection(db, "pdfComparisons"), {
+          workUnit,
+          quarterRef,
+          verdict,
+          summary: combinedSummary,
+          originalFileName: origFile.name,
+          ratificationFileName: ratFile.name,
+          reviewedBy: `${currentUserProfile.fullName} (${currentUserProfile.empId})`,
+          createdAtStr: new Date().toLocaleString(),
+          createdAt: serverTimestamp()
+        });
+
+        showAlert("globalAlert", "PDF ratification comparison completed and saved to audit log.", "success");
+      } catch (err) {
+        showAlert("globalAlert", "PDF comparison error: " + err.message, "error");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Compare Reports & Generate Executive Summary";
+      }
+    });
+
+    function renderPdfHistory() {
+      const tbody = document.getElementById("pdfHistoryBody");
+      if (allPdfComparisons.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:16px; color:var(--slate-600);">No PDF comparisons logged yet.</td></tr>`;
+        return;
+      }
+      tbody.innerHTML = "";
+      allPdfComparisons.forEach((item) => {
+        const vClass = (item.verdict || "").toLowerCase().includes("fully")
+          ? "pill-green"
+          : (item.verdict || "").toLowerCase().includes("not") ? "pill-red" : "pill-amber";
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td style="white-space:nowrap; font-size:0.78rem;">${item.createdAtStr || "—"}</td>
+          <td><strong>${item.workUnit}</strong><br/><span style="font-size:0.76rem; color:var(--slate-600);">${item.quarterRef || ""}</span></td>
+          <td><span class="pill ${vClass}">${item.verdict}</span></td>
+          <td style="font-size:0.77rem;">Orig: ${item.originalFileName || "PDF"}<br/>Rat: ${item.ratificationFileName || "PDF"}</td>
+          <td style="max-width:340px; font-size:0.8rem; white-space:pre-line;">${(item.summary || "").slice(0, 320)}${(item.summary || "").length > 320 ? "..." : ""}</td>
+          <td style="font-size:0.77rem;">${item.reviewedBy || "—"}</td>
         `;
         tbody.appendChild(tr);
       });
